@@ -1,22 +1,34 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FunctionAppStartup.cs" company="ArcTouch LLC">
-//   Copyright 2019 ArcTouch LLC.
-//   All rights reserved.
-//
-//   This file, its contents, concepts, methods, behavior, and operation
-//   (collectively the "Software") are protected by trade secret, patent,
-//   and copyright laws. The use of the Software is governed by a license
-//   agreement. Disclosure of the Software to third parties, in any form,
-//   in whole or in part, is expressly prohibited except as authorized by
-//   the license agreement.
-// </copyright>
-// <summary>
-//   Defines the FunctionAppStartup type.
-// </summary>
-//  --------------------------------------------------------------------------------------------------------------------
-using System;
+﻿using System;
+using System.Net.Http;
+using Cosmonaut;
+using Cosmonaut.Extensions.Microsoft.DependencyInjection;
+using Evidences.API.ResponseHandler;
+using Evidences.Domain.Commands.CurrentSongCommands;
+using Evidences.Domain.Commands.ReactionCommands;
+using Evidences.Domain.Commands.ScoreCommands;
+using Evidences.Domain.Commands.SongCommands;
+using Evidences.Domain.Commands.UserCommands;
+using Evidences.Domain.Handlers.CommandHandlers.CurrentSongCommandHandlers;
+using Evidences.Domain.Handlers.CommandHandlers.ScoreCommandHandlers;
+using Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers;
+using Evidences.Domain.Handlers.CommandHandlers.UserCommandHandlers;
+using Evidences.Domain.Handlers.QueryHandlers.CurrentSongQueryHandlers;
+using Evidences.Domain.Handlers.QueryHandlers.SongsQueryHandler;
+using Evidences.Domain.Models;
+using Evidences.Domain.Queries.CurrentSongQueries;
+using Evidences.Domain.Queries.SongsQueries;
+using Evidences.Domain.Repositories;
+using Evidences.Domain.Validator.CurrentSongCommandValidators;
+using Evidences.Domain.Validator.ReactionCommandValidators;
+using Evidences.Domain.Validator.ScoreCommandValidators;
+using Evidences.Domain.Validator.SongCommandValidator;
+using Evidences.Domain.Validator.UserCommandValidators;
+using Evidences.Infra.Repositories;
+using FluentValidation;
 using FunctionMonkey.Abstractions;
 using FunctionMonkey.Abstractions.Builders;
+using FunctionMonkey.FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Evidences.API
 {
@@ -27,17 +39,69 @@ namespace Evidences.API
             builder
                 .Setup((serviceCollection, commandRegistry) =>
                 {
+                    var cosmosDbUri = Environment.GetEnvironmentVariable("CosmosDbUri");
+                    var cosmosDbKey = Environment.GetEnvironmentVariable("CosmosDbKey");
+                    var cosmosSettings = new CosmosStoreSettings("EvidencesDb", new Uri(cosmosDbUri), cosmosDbKey);
 
+                    commandRegistry.Register<StartSongCommandHandler>();
+                    commandRegistry.Register<FinishSongCommandHandler>();
+                    commandRegistry.Register<GetCurrentSongQueryHandler>();
+                    commandRegistry.Register<SetScoreCommandHandler>();
+                    commandRegistry.Register<AddSongCommandHandler>();
+                    commandRegistry.Register<RemoveSongCommandHandler>();
+                    commandRegistry.Register<GetSongsQueryHandler>();
+                    commandRegistry.Register<AddUserCommandHandler>();
+
+                    serviceCollection.AddCosmosStore<CurrentSong>(cosmosSettings);
+                    serviceCollection.AddCosmosStore<Score>(cosmosSettings);
+                    serviceCollection.AddCosmosStore<Song>(cosmosSettings);
+                    serviceCollection.AddCosmosStore<User>(cosmosSettings);
+
+                    serviceCollection.AddScoped<ICurrentSongRepository, CurrentSongRepository>();
+                    serviceCollection.AddScoped<IScoreRepository, ScoreRepository>();
+                    serviceCollection.AddScoped<ISongRepository, SongRepository>();
+                    serviceCollection.AddScoped<IUserRepository, UserRepository>();
+
+                    serviceCollection.AddScoped<IValidator<StartSongCommand>, StartSongCommandValidator>();
+                    serviceCollection.AddScoped<IValidator<ReactionCommand>, ReactionCommandValidator>();
+                    serviceCollection.AddScoped<IValidator<SetScoreCommand>, SetScoreCommandValidator>();
+                    serviceCollection.AddScoped<IValidator<AddSongCommand>, AddSongCommandValidator>();
+                    serviceCollection.AddScoped<IValidator<RemoveSongCommand>, RemoveSongCommandValidator>();
+                    serviceCollection.AddScoped<IValidator<AddUserCommand>, AddUserCommandValidator>();
                 })
                 .OpenApiEndpoint(openApi => openApi
                     .Title("Evidences API")
                     .Version("1.0.0")
                     .UserInterface()
                 )
-                //.Functions(functions => functions
-                    
-                //)
-                ;
+                .AddFluentValidation()
+                .Functions(functions => functions
+                    .HttpRoute("v1/song/current/finish", route => route
+                        .HttpFunction<FinishSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                        .Options(options => options.ResponseHandler<AcceptedResponseHandler>())
+                    )
+                    .HttpRoute("v1/song/current/start", route => route
+                        .HttpFunction<StartSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                        .Options(options => options.ResponseHandler<AcceptedResponseHandler>())
+                    )
+                    .HttpRoute("v1/song/current", route => route
+                        .HttpFunction<GetCurrentSongQuery>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
+                    )
+                    .HttpRoute("v1/song/score", route => route
+                        .HttpFunction<SetScoreCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                        .Options(options => options.ResponseHandler<AcceptedResponseHandler>())
+                    )
+                    .HttpRoute("v1/song", route => route
+                        .HttpFunction<AddSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                    )
+                    .HttpRoute("v1/song", route => route
+                        .HttpFunction<RemoveSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
+                        .Options(options => options.ResponseHandler<AcceptedResponseHandler>())
+                    )
+                    .HttpRoute("v1/user", route => route
+                        .HttpFunction<AddUserCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                    )
+                );
         }
     }
 }

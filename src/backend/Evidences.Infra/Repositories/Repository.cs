@@ -1,20 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Repository.cs" company="ArcTouch LLC">
-//   Copyright 2019 ArcTouch LLC.
-//   All rights reserved.
-//
-//   This file, its contents, concepts, methods, behavior, and operation
-//   (collectively the "Software") are protected by trade secret, patent,
-//   and copyright laws. The use of the Software is governed by a license
-//   agreement. Disclosure of the Software to third parties, in any form,
-//   in whole or in part, is expressly prohibited except as authorized by
-//   the license agreement.
-// </copyright>
-// <summary>
-//   Defines the Repository type.
-// </summary>
-//  --------------------------------------------------------------------------------------------------------------------
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -28,16 +12,16 @@ namespace Evidences.Infra.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Model
     {
-        private readonly ICosmosStore<TEntity> _cosmosStore;
+        protected readonly ICosmosStore<TEntity> CosmosStore;
 
         public Repository(ICosmosStore<TEntity> cosmosStore)
         {
-            _cosmosStore = cosmosStore;
+            CosmosStore = cosmosStore;
         }
 
         public async Task Add(TEntity obj)
         {
-            await _cosmosStore.AddAsync(obj);
+            await CosmosStore.AddAsync(obj);
         }
 
         public async Task<bool> Exists(Guid id)
@@ -48,7 +32,7 @@ namespace Evidences.Infra.Repositories
 
         public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate = null)
         {
-            var query = _cosmosStore.Query();
+            var query = CosmosStore.Query();
 
             if (predicate != null)
             {
@@ -60,17 +44,17 @@ namespace Evidences.Infra.Repositories
 
         public async Task<TEntity> GetById(Guid id)
         {
-            return await _cosmosStore.FindAsync(id.ToString());
+            return await CosmosStore.FindAsync(id.ToString());
         }
 
         public async Task Remove(Guid id)
         {
-            await _cosmosStore.RemoveByIdAsync(id.ToString());
+            await CosmosStore.RemoveByIdAsync(id.ToString());
         }
 
         public async Task Update(TEntity obj)
         {
-            await _cosmosStore.UpdateAsync(obj);
+            await CosmosStore.UpdateAsync(obj);
         }
     }
 }

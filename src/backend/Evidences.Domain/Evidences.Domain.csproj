@@ -9,16 +9,14 @@
     <Compile Remove="Repositories\Repository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Folder Include="Handlers\CommandHandlers\NotifyUserCommandHandlers\" />
+    <Folder Include="Handlers\CommandHandlers\ReactionCommandHandlers\" />
     <Folder Include="Repositories\" />
-    <Folder Include="Commands\" />
-    <Folder Include="Queries\" />
-    <Folder Include="Commands\CurrentSongCommands\" />
-    <Folder Include="Commands\ScoreCommands\" />
     <Folder Include="Commands\SongCommands\" />
     <Folder Include="Commands\UserCommands\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.2.2" />
     <PackageReference Include="FunctionMonkey.Abstractions" Version="2.1.0" />
   </ItemGroup>
 </Project>

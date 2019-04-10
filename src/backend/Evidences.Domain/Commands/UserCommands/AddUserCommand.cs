@@ -19,8 +19,8 @@ using Evidences.Domain.Models;
 using AzureFromTheTrenches.Commanding.Abstractions;
 namespace Evidences.Domain.Commands.UserCommands
 {
-    public class AddUserCommand : User, ICommand<User>
+    public class AddUserCommand : ICommand<User>
     {
-
+        public string UserName { get; set; }
     }
 }

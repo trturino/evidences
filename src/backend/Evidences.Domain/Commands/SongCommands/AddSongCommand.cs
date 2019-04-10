@@ -1,25 +1,28 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AddSongCommand.cs" company="ArcTouch LLC">
-//   Copyright 2019 ArcTouch LLC.
-//   All rights reserved.
-//
-//   This file, its contents, concepts, methods, behavior, and operation
-//   (collectively the "Software") are protected by trade secret, patent,
-//   and copyright laws. The use of the Software is governed by a license
-//   agreement. Disclosure of the Software to third parties, in any form,
-//   in whole or in part, is expressly prohibited except as authorized by
-//   the license agreement.
-// </copyright>
-// <summary>
-//   Defines the AddSongCommand type.
-// </summary>
-//  --------------------------------------------------------------------------------------------------------------------
+﻿using System;
 using AzureFromTheTrenches.Commanding.Abstractions;
 using Evidences.Domain.Models;
 namespace Evidences.Domain.Commands.SongCommands
 {
-    public class AddSongCommand : Song, ICommand<Song>
+    public class AddSongCommand : ICommand<Song>
     {
+        public string Title { get; set; }
 
+        public string Author { get; set; }
+
+        public string Description { get; set; }
+
+        public string Duration { get; set; }
+
+        public string Url { get; set; }
+
+        public string Thumbnail { get; set; }
+
+        public bool NoDescription { get; set; }
+
+        public bool NoAuthor { get; set; }
+
+        public string ViewCount { get; set; }
+
+        public Guid AddedByUser { get; set; }
     }
 }

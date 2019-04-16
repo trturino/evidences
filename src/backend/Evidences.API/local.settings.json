@@ -3,7 +3,8 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "CosmosDbUri": "https://localhost:8081",
-    "CosmosDbKey": "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="
-  },
+    "CosmosDbUri": "https://evideces-db.documents.azure.com:443/",
+    "CosmosDbKey": "auE5h9zhDzkKsrJz5LXrKnG6t5X2NvCJzKoB2qeekIZNjGr0qkXbaf47bCaM2kUBzgfg2JO8yGSvDVaquKjlHQ==",
+    "signalRConnectionString": "Endpoint=https://evidences-events.service.signalr.net;AccessKey=3h5HEO/sQi7tCeoLbLspF4K2HkTFBuEO9V7GCSXdyds=;Version=1.0;"
+  }
 }

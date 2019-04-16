@@ -6,21 +6,23 @@ using Evidences.API.ResponseHandler;
 using Evidences.Domain.Commands.CurrentSongCommands;
 using Evidences.Domain.Commands.ReactionCommands;
 using Evidences.Domain.Commands.ScoreCommands;
+using Evidences.Domain.Commands.SignalRCommands;
 using Evidences.Domain.Commands.SongCommands;
 using Evidences.Domain.Commands.UserCommands;
 using Evidences.Domain.Handlers.CommandHandlers.CurrentSongCommandHandlers;
 using Evidences.Domain.Handlers.CommandHandlers.ScoreCommandHandlers;
+using Evidences.Domain.Handlers.CommandHandlers.SignalRCommandHandlers;
 using Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers;
 using Evidences.Domain.Handlers.CommandHandlers.UserCommandHandlers;
 using Evidences.Domain.Handlers.QueryHandlers.CurrentSongQueryHandlers;
 using Evidences.Domain.Handlers.QueryHandlers.SongsQueryHandler;
 using Evidences.Domain.Models;
 using Evidences.Domain.Queries.CurrentSongQueries;
-using Evidences.Domain.Queries.SongsQueries;
 using Evidences.Domain.Repositories;
 using Evidences.Domain.Validator.CurrentSongCommandValidators;
 using Evidences.Domain.Validator.ReactionCommandValidators;
 using Evidences.Domain.Validator.ScoreCommandValidators;
+using Evidences.Domain.Validator.SignalRCommandValidators;
 using Evidences.Domain.Validator.SongCommandValidator;
 using Evidences.Domain.Validator.UserCommandValidators;
 using Evidences.Infra.Repositories;
@@ -51,6 +53,7 @@ namespace Evidences.API
                     commandRegistry.Register<RemoveSongCommandHandler>();
                     commandRegistry.Register<GetSongsQueryHandler>();
                     commandRegistry.Register<AddUserCommandHandler>();
+                    commandRegistry.Register<SignalRNegotiateCommandHandler>();
 
                     serviceCollection.AddCosmosStore<CurrentSong>(cosmosSettings);
                     serviceCollection.AddCosmosStore<Score>(cosmosSettings);
@@ -68,6 +71,7 @@ namespace Evidences.API
                     serviceCollection.AddScoped<IValidator<AddSongCommand>, AddSongCommandValidator>();
                     serviceCollection.AddScoped<IValidator<RemoveSongCommand>, RemoveSongCommandValidator>();
                     serviceCollection.AddScoped<IValidator<AddUserCommand>, AddUserCommandValidator>();
+                    serviceCollection.AddScoped<IValidator<SignalRNegotiateCommand>, SignalRNegotiateCommandValidator>();
                 })
                 .OpenApiEndpoint(openApi => openApi
                     .Title("Evidences API")
@@ -100,6 +104,9 @@ namespace Evidences.API
                     )
                     .HttpRoute("v1/user", route => route
                         .HttpFunction<AddUserCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                    )
+                    .SignalR(signalR => signalR
+                        .Negotiate<SignalRNegotiateCommand>("/v1/negotiate", AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
                     )
                 );
         }

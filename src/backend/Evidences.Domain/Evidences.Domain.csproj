@@ -14,6 +14,9 @@
     <Folder Include="Repositories\" />
     <Folder Include="Commands\SongCommands\" />
     <Folder Include="Commands\UserCommands\" />
+    <Folder Include="Commands\SignalRCommands\" />
+    <Folder Include="Handlers\CommandHandlers\SignalRCommandHandlers\" />
+    <Folder Include="Validator\SignalRCommandValidators\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.2.2" />

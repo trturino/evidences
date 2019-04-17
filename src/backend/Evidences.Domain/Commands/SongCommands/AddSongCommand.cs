@@ -1,9 +1,10 @@
 ﻿using System;
 using AzureFromTheTrenches.Commanding.Abstractions;
-using Evidences.Domain.Models;
+using FunctionMonkey.Abstractions.SignalR;
+
 namespace Evidences.Domain.Commands.SongCommands
 {
-    public class AddSongCommand : ICommand<Song>
+    public class AddSongCommand : ICommand<SignalRMessage>
     {
         public string Title { get; set; }
 

@@ -10,7 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Handlers\CommandHandlers\NotifyUserCommandHandlers\" />
-    <Folder Include="Handlers\CommandHandlers\ReactionCommandHandlers\" />
     <Folder Include="Repositories\" />
     <Folder Include="Commands\SongCommands\" />
     <Folder Include="Commands\UserCommands\" />

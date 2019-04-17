@@ -4,10 +4,11 @@ using AzureFromTheTrenches.Commanding.Abstractions;
 using Evidences.Domain.Commands.SongCommands;
 using Evidences.Domain.Models;
 using Evidences.Domain.Repositories;
+using FunctionMonkey.Abstractions.SignalR;
 
 namespace Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers
 {
-    public class AddSongCommandHandler : ICommandHandler<AddSongCommand, Song>
+    public class AddSongCommandHandler : ICommandHandler<AddSongCommand, SignalRMessage>
     {
         private readonly ISongRepository _songRepository;
 
@@ -16,7 +17,7 @@ namespace Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers
             _songRepository = songRepository;
         }
 
-        public async Task<Song> ExecuteAsync(AddSongCommand command, Song previousResult)
+        public async Task<SignalRMessage> ExecuteAsync(AddSongCommand command, SignalRMessage previousResult)
         {
             var song = new Song()
             {
@@ -37,7 +38,12 @@ namespace Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers
 
             await _songRepository.Add(song);
 
-            return song;
+            return new SignalRMessage
+            {
+                Arguments = new object[] { song },
+                GroupName = null,
+                Target = "addSongCommandNotification",
+            };
         }
     }
 }

@@ -82,11 +82,11 @@ namespace Evidences.API
                 .Functions(functions => functions
                     .HttpRoute("v1/song/current/finish", route => route
                         .HttpFunction<FinishSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
-                        .Options(options => options.ResponseHandler<AcceptedResponseHandler>())
+                        .OutputTo.SignalRMessage("karaokeHub")
                     )
                     .HttpRoute("v1/song/current/start", route => route
                         .HttpFunction<StartSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
-                        .Options(options => options.ResponseHandler<AcceptedResponseHandler>())
+                        .OutputTo.SignalRMessage("karaokeHub")
                     )
                     .HttpRoute("v1/song/current", route => route
                         .HttpFunction<GetCurrentSongQuery>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
@@ -97,6 +97,7 @@ namespace Evidences.API
                     )
                     .HttpRoute("v1/song", route => route
                         .HttpFunction<AddSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                        .OutputTo.SignalRMessage("karaokeHub")
                     )
                     .HttpRoute("v1/song", route => route
                         .HttpFunction<RemoveSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)

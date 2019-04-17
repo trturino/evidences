@@ -1,9 +1,10 @@
 ﻿using System;
 using AzureFromTheTrenches.Commanding.Abstractions;
+using FunctionMonkey.Abstractions.SignalR;
 
 namespace Evidences.Domain.Commands.ReactionCommands
 {
-    public class ReactionCommand : ICommand<bool>
+    public class ReactionCommand : ICommand<SignalRMessage>
     {
         public Guid SondId { get; set; }
 

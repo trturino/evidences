@@ -2,10 +2,11 @@
 using AzureFromTheTrenches.Commanding.Abstractions;
 using Evidences.Domain.Commands.CurrentSongCommands;
 using Evidences.Domain.Repositories;
+using FunctionMonkey.Abstractions.SignalR;
 
 namespace Evidences.Domain.Handlers.CommandHandlers.CurrentSongCommandHandlers
 {
-    public class FinishSongCommandHandler : ICommandHandler<FinishSongCommand, bool>
+    public class FinishSongCommandHandler : ICommandHandler<FinishSongCommand, SignalRMessage>
     {
         private readonly ICurrentSongRepository _currentSongRepository;
         private readonly ISongRepository _songRepository;
@@ -19,12 +20,12 @@ namespace Evidences.Domain.Handlers.CommandHandlers.CurrentSongCommandHandlers
             _songRepository = songRepository;
         }
 
-        public async Task<bool> ExecuteAsync(FinishSongCommand command, bool previousResult)
+        public async Task<SignalRMessage> ExecuteAsync(FinishSongCommand command, SignalRMessage previousResult)
         {
             var currentSong = await _currentSongRepository.FirstOrDefault();
             if (currentSong == null)
             {
-                return false;
+                return null;
             }
 
             var song = await _songRepository.GetById(currentSong.SongId);
@@ -33,7 +34,12 @@ namespace Evidences.Domain.Handlers.CommandHandlers.CurrentSongCommandHandlers
             await _songRepository.Update(song);
             await _currentSongRepository.Remove(currentSong.Id);
 
-            return true;
+            return new SignalRMessage
+            {
+                Arguments = new object[] { currentSong },
+                GroupName = null,
+                Target = "finishSongCommandNotification",
+            };
         }
     }
 }

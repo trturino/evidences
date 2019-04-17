@@ -16,8 +16,10 @@ using Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers;
 using Evidences.Domain.Handlers.CommandHandlers.UserCommandHandlers;
 using Evidences.Domain.Handlers.QueryHandlers.CurrentSongQueryHandlers;
 using Evidences.Domain.Handlers.QueryHandlers.SongsQueryHandler;
+using Evidences.Domain.Handlers.QueryHandlers.StateQueryHandlers;
 using Evidences.Domain.Models;
 using Evidences.Domain.Queries.CurrentSongQueries;
+using Evidences.Domain.Queries.StateQuery;
 using Evidences.Domain.Repositories;
 using Evidences.Domain.Validator.CurrentSongCommandValidators;
 using Evidences.Domain.Validator.ReactionCommandValidators;
@@ -53,6 +55,7 @@ namespace Evidences.API
                     commandRegistry.Register<RemoveSongCommandHandler>();
                     commandRegistry.Register<GetSongsQueryHandler>();
                     commandRegistry.Register<AddUserCommandHandler>();
+                    commandRegistry.Register<GetStateQueryHandler>();
                     commandRegistry.Register<SignalRNegotiateCommandHandler>();
 
                     serviceCollection.AddCosmosStore<CurrentSong>(cosmosSettings);
@@ -105,6 +108,9 @@ namespace Evidences.API
                     )
                     .HttpRoute("v1/user", route => route
                         .HttpFunction<AddUserCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                    )
+                    .HttpRoute("v1/state", route => route
+                        .HttpFunction<GetStateQuery>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
                     )
                     .SignalR(signalR => signalR
                         .Negotiate<SignalRNegotiateCommand>("/v1/negotiate", AuthorizationTypeEnum.Anonymous, HttpMethod.Post)

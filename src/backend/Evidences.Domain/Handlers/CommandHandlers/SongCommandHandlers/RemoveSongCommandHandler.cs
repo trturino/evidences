@@ -2,10 +2,11 @@
 using AzureFromTheTrenches.Commanding.Abstractions;
 using Evidences.Domain.Commands.SongCommands;
 using Evidences.Domain.Repositories;
+using FunctionMonkey.Abstractions.SignalR;
 
 namespace Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers
 {
-    public class RemoveSongCommandHandler : ICommandHandler<RemoveSongCommand, bool>
+    public class RemoveSongCommandHandler : ICommandHandler<RemoveSongCommand, SignalRMessage>
     {
         private readonly ISongRepository _songRepository;
 
@@ -14,11 +15,16 @@ namespace Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers
             _songRepository = songRepository;
         }
 
-        public async Task<bool> ExecuteAsync(RemoveSongCommand command, bool previousResult)
+        public async Task<SignalRMessage> ExecuteAsync(RemoveSongCommand command, SignalRMessage previousResult)
         {
             await _songRepository.Remove(command.SongId);
 
-            return true;
+            return new SignalRMessage
+            {
+                Arguments = new object[] { command },
+                GroupName = null,
+                Target = "removeSongCommandNotification",
+            };
         }
     }
 }

@@ -10,6 +10,7 @@ using Evidences.Domain.Commands.SignalRCommands;
 using Evidences.Domain.Commands.SongCommands;
 using Evidences.Domain.Commands.UserCommands;
 using Evidences.Domain.Handlers.CommandHandlers.CurrentSongCommandHandlers;
+using Evidences.Domain.Handlers.CommandHandlers.ReactionCommandHandlers;
 using Evidences.Domain.Handlers.CommandHandlers.ScoreCommandHandlers;
 using Evidences.Domain.Handlers.CommandHandlers.SignalRCommandHandlers;
 using Evidences.Domain.Handlers.CommandHandlers.SongCommandHandlers;
@@ -56,6 +57,7 @@ namespace Evidences.API
                     commandRegistry.Register<GetSongsQueryHandler>();
                     commandRegistry.Register<AddUserCommandHandler>();
                     commandRegistry.Register<GetStateQueryHandler>();
+                    commandRegistry.Register<ReactionCommandHandler>();
                     commandRegistry.Register<SignalRNegotiateCommandHandler>();
 
                     serviceCollection.AddCosmosStore<CurrentSong>(cosmosSettings);
@@ -103,14 +105,17 @@ namespace Evidences.API
                         .OutputTo.SignalRMessage("karaokeHub")
                     )
                     .HttpRoute("v1/song", route => route
-                        .HttpFunction<RemoveSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
-                        .Options(options => options.ResponseHandler<AcceptedResponseHandler>())
+                        .HttpFunction<RemoveSongCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Delete)
+                        .OutputTo.SignalRMessage("karaokeHub")
                     )
                     .HttpRoute("v1/user", route => route
                         .HttpFunction<AddUserCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
                     )
                     .HttpRoute("v1/state", route => route
                         .HttpFunction<GetStateQuery>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
+                    )
+                    .HttpRoute("v1/reaction", route => route
+                        .HttpFunction<ReactionCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
                     )
                     .SignalR(signalR => signalR
                         .Negotiate<SignalRNegotiateCommand>("/v1/negotiate", AuthorizationTypeEnum.Anonymous, HttpMethod.Post)

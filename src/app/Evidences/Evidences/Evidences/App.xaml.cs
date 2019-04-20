@@ -21,6 +21,7 @@ namespace Evidences
 
             builder.RegisterModule(new ApplicationModule());
             Container = builder.Build();
+
         }
 
         protected override void OnStart()

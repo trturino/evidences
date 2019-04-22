@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Evidences.Models;
 using Evidences.Repositories;
 using Microsoft.AspNetCore.SignalR.Client;
+using Evidences.Models.Requests;
 
 namespace Evidences.Services
 {
@@ -51,7 +52,7 @@ namespace Evidences.Services
                 throw new InvalidOperationException("User not authenticated");
             }
 
-            var credentials = await _signalRRepository.GetAuthInfo(user.Id);
+            var credentials = await _signalRRepository.GetAuthInfo(new AuthInfoRequest { UserId = user.Id });
 
             _hubConnection = new HubConnectionBuilder()
                 .WithUrl(credentials.Url,

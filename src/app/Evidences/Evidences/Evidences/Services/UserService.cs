@@ -3,6 +3,7 @@ using Evidences.Models;
 using Evidences.Repositories;
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using Evidences.Models.Requests;
 
 namespace Evidences.Services
 {
@@ -19,7 +20,7 @@ namespace Evidences.Services
 
         public async Task Add(string userName)
         {
-            var user = await _userRepository.Add(userName);
+            var user = await _userRepository.Add(new AddUserRequest { UserName = userName });
 
             Application.Current.Properties[USER_KEY] = JsonConvert.SerializeObject(user);
             await Application.Current.SavePropertiesAsync();

@@ -1,6 +1,8 @@
 ﻿using System.Windows.Input;
 using Evidences.Services;
 using Xamarin.Forms;
+using System.Linq;
+using Evidences.Models;
 
 namespace Evidences.ViewModel
 {
@@ -9,17 +11,21 @@ namespace Evidences.ViewModel
         protected ISignalRService SignalRService { get; }
         protected IYoutubeSearchService YoutubeSearchService { get; }
         protected IUserService UserService { get; }
+        protected ISongService SongService { get; }
 
         public MainViewModel(
                 IStateService stateService,
                 ISignalRService signaRService,
                 IYoutubeSearchService youtubeSearchService,
-                IUserService userService
+                IUserService userService,
+                ISongService songService
             ) : base(stateService)
         {
             SignalRService = signaRService;
             YoutubeSearchService = youtubeSearchService;
             UserService = userService;
+            SongService = songService;
+
             CreateUser = new Command(CreateUserExecute);
             SearchYoutube = new Command(SearchYoutubeExecute);
 
@@ -34,11 +40,16 @@ namespace Evidences.ViewModel
 
         public ICommand SearchYoutube { get; }
 
+        public User CurentUser => UserService.Get();
+
         private async void CreateUserExecute()
         {
             try
             {
-                await UserService.Add(UserName);
+                if (CurentUser == null)
+                {
+                    await UserService.Add(UserName);
+                }
                 await SignalRService.Connect();
             }
             catch (System.Exception ex)
@@ -51,6 +62,27 @@ namespace Evidences.ViewModel
             try
             {
                 var results = await YoutubeSearchService.SearchVideo($"{YoutubeSearchQuery} karaoke", 1);
+                var result = results.FirstOrDefault();
+                if (result == null)
+                {
+                    return;
+                }
+
+                var song = new Song()
+                {
+                    Title = result.Title,
+                    Author = result.Author,
+                    Description = result.Description,
+                    Duration = result.Duration,
+                    Url = result.Url,
+                    Thumbnail = result.Thumbnail,
+                    NoAuthor = result.NoAuthor,
+                    NoDescription = result.NoDescription,
+                    ViewCount = result.ViewCount,
+                    AddedByUser = CurentUser.Id
+                };
+
+                await SongService.Add(song);
             }
             catch (System.Exception)
             {

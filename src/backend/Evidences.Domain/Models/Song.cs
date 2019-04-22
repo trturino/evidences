@@ -27,5 +27,7 @@ namespace Evidences.Domain.Models
         public bool Finished { get; set; }
 
         public DateTimeOffset AddedAt { get; set; }
+
+        public string AddedByUserName { get; set; }
     }
 }

@@ -27,5 +27,7 @@ namespace Evidences.Models
         public Guid AddedByUser { get; set; }
 
         public DateTimeOffset AddedAt { get; set; }
+
+        public string AddedByUserName { get; set; }
     }
 }

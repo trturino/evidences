@@ -15,39 +15,57 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Evidences.Services;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using Xamarin.Forms;
 
 namespace Evidences.ViewModel
 {
     public class OnboardingViewModel : BaseViewModel
     {
+        protected readonly IPageDialogService PageDialogService;
+
         public OnboardingViewModel(IStateService stateService,
             IUserService userService,
             ISignalRService signaRService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            IPageDialogService pageDialogService)
             : base(stateService, userService, signaRService, navigationService)
         {
-            CreateUser = new DelegateCommand(CreateUserExecute);
+            PageDialogService = pageDialogService;
+            LetsSing = new DelegateCommand(async () => await LetsSingExecute()).ObservesCanExecute(() => IsNotBusy);
         }
 
         public string UserName { get; set; }
-        public DelegateCommand CreateUser { get; }
+        public DelegateCommand LetsSing { get; }
 
-        private async void CreateUserExecute()
+        private async Task LetsSingExecute()
         {
             try
             {
-                if (CurentUser == null)
-                    await UserService.Add(UserName);
+                await ExecuteBusyAction(async () =>
+                {
+                    if (string.IsNullOrWhiteSpace(UserName))
+                    {
+                        await PageDialogService.DisplayAlertAsync("Really?", "Maybe you forgot something!", "Ok");
+                        return;
+                    }
 
-                await SignalRService.Connect();
+                    if (CurentUser == null)
+                        await UserService.Add(UserName);
+
+                    await SignalRService.Connect();
+                    await NavigationService.NavigateAsync("../Home");
+
+                });
             }
             catch (System.Exception ex)
             {
-
+                Debug.WriteLine(ex);
             }
         }
 

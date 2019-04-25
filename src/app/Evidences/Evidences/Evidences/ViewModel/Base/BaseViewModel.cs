@@ -26,6 +26,7 @@ namespace Evidences.ViewModel
             NavigationService = navigationService;
         }
 
+        public bool IsNotBusy { get { return !IsBusy; } }
         public bool IsBusy { get; set; }
         public User CurentUser => UserService.Get();
 

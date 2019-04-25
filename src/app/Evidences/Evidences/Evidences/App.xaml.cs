@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Autofac;
+using Evidences.Services;
 using Evidences.ViewModel;
 using Evidences.Views;
 using Prism;
@@ -18,11 +19,27 @@ namespace Evidences
         protected override async void OnInitialized()
         {
             InitializeComponent();
+#if DEBUG
+            HotReloader.Current.Start(this);
+#endif
             await InitializeNavigaton();
         }
 
-        protected Task InitializeNavigaton()
-           => NavigationService.NavigateAsync("Go/Onboarding");
+        //TODO: Future William, although this works, you are not satisfied!
+        protected async Task InitializeNavigaton()
+        {
+            var userService = Container.Resolve<IUserService>();
+            var currentUser = userService?.Get();
+
+            if (currentUser == null)
+            {
+                await NavigationService.NavigateAsync("Go/Onboarding");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync("Go/Home");
+            }
+        }
 
         //TODO: half mozzarella half pepperoni
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

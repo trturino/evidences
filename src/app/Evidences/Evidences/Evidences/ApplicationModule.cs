@@ -13,7 +13,6 @@ namespace Evidences
         {
             RegisterRepositories(builder);
             RegisterServices(builder);
-            RegisterViewModel(builder);
         }
 
         private void RegisterRepositories(ContainerBuilder builder)
@@ -80,11 +79,11 @@ namespace Evidences
                 .As<IYoutubeSearchService>();
         }
 
-        private void RegisterViewModel(ContainerBuilder builder)
-        {
-            builder
-                .RegisterType<MainViewModel>()
-                .AsSelf();
-        }
+        //private void RegisterViewModel(ContainerBuilder builder)
+        //{
+        //    builder
+        //        .RegisterType<MainViewModel>()
+        //        .AsSelf();
+        //}
     }
 }

@@ -1,27 +1,38 @@
-﻿using Autofac;
+﻿using System.Threading.Tasks;
+using Autofac;
+using Evidences.ViewModel;
+using Evidences.Views;
+using Prism;
+using Prism.Autofac;
+using Prism.Ioc;
 using Xamarin.Forms;
 
 namespace Evidences
 {
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        public static IContainer Container { get; private set; }
+        public App() : this(null) { }
 
-        public App()
+        public App(IPlatformInitializer platformInitializer) : base(platformInitializer) { }
+
+        protected override async void OnInitialized()
         {
             InitializeComponent();
-            BootstrapIoc();
-
-            MainPage = new NavigationPage(new MainPage());
+            await InitializeNavigaton();
         }
 
-        private void BootstrapIoc()
+        protected Task InitializeNavigaton()
+           => NavigationService.NavigateAsync("Go/Onboarding");
+
+        //TODO: half mozzarella half pepperoni
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            var builder = new ContainerBuilder();
-
+            var builder = containerRegistry.GetBuilder();
             builder.RegisterModule(new ApplicationModule());
-            Container = builder.Build();
 
+            containerRegistry.RegisterForNavigation<NavigationPage>("Go");
+            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Home");
+            containerRegistry.RegisterForNavigation<OnboardingPage, OnboardingViewModel>("Onboarding");
         }
 
         protected override void OnStart()

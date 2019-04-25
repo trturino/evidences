@@ -107,7 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Evidences\Evidences.csproj">
-      <Project>{0593DE2A-1764-4070-862D-7C385C878702}</Project>
+      <Project>{176F1EFB-131E-4AFA-8FF7-7840ABD877A1}</Project>
       <Name>Evidences</Name>
     </ProjectReference>
   </ItemGroup>

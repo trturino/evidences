@@ -18,6 +18,9 @@ namespace Evidences
         protected override async void OnInitialized()
         {
             InitializeComponent();
+#if DEBUG
+            HotReloader.Current.Start(this);
+#endif
             await InitializeNavigaton();
         }
 

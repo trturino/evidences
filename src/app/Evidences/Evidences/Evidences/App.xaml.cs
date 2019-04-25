@@ -22,7 +22,7 @@ namespace Evidences
         }
 
         protected Task InitializeNavigaton()
-           => NavigationService.NavigateAsync("Go/Main");
+           => NavigationService.NavigateAsync("Go/Onboarding");
 
         //TODO: half mozzarella half pepperoni
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -31,8 +31,8 @@ namespace Evidences
             builder.RegisterModule(new ApplicationModule());
 
             containerRegistry.RegisterForNavigation<NavigationPage>("Go");
-            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Main");
-            containerRegistry.RegisterForNavigation<OnboardingPage, OnboardingViewModel>("Login");
+            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Home");
+            containerRegistry.RegisterForNavigation<OnboardingPage, OnboardingViewModel>("Onboarding");
         }
 
         protected override void OnStart()

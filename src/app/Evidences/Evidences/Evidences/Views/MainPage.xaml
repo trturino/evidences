@@ -1,23 +1,89 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Evidences"
-             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Evidences.Views.MainPage">
-    <StackLayout>
-        <Entry Text="{Binding UserName}"
-               Placeholder="User Name" />
-        
-        <Button Command="{Binding CreateUser}"
-                Text="Create User"/>
-        
-        <Entry Text="{Binding YoutubeSearchQuery}"
-               Placeholder="Youtube Search" />
-        
-        <Button Command="{Binding SearchYoutube}"
-                Text="Search Youtube"/>
-
-    </StackLayout>
-
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Evidences"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="Evidences.Views.MainPage"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="{StaticResource black}">
+    <ContentPage.Content>
+        <Grid
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="1.8*" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+            <Image
+                Grid.Row="0"
+                AutomationProperties.IsInAccessibleTree="true"
+                AutomationProperties.Name="The AT OK Logo!"
+                AutomationProperties.HelpText="This is an orange logo! It's like a microphone built with the ArcTouch logo."
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Source="logoHorizontal.png"
+                WidthRequest="218"
+                HeightRequest="102" />
+            <Entry
+                Grid.Row="1"
+                Margin="24,0,24,24"
+                Placeholder="Find song"
+                HeightRequest="48"
+                Text="{Binding YoutubeSearchQuery}"
+                TextColor="{StaticResource lightGrey}"
+                BackgroundColor="{StaticResource grey}" />
+            <Label
+                Grid.Row="2"
+                Margin="24,0,24,0"
+                Text="Now playing"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="{StaticResource pumpkinOrange}" />
+            <BoxView
+                Margin="0, 48, 0, 0"
+                Grid.Row="3"
+                Grid.RowSpan="4"
+                BackgroundColor="{StaticResource white}"
+                CornerRadius="32, 32, 0, 0" />
+            <Frame
+                HeightRequest="38"
+                Margin="24, 24, 24, 0"
+                Grid.Row="3">
+            </Frame>
+            <ListView
+                Margin="0, 24, 0 ,0"
+                BackgroundColor="Transparent"
+                Grid.Row="4"
+                Grid.RowSpan="3">
+                <ListView.ItemsSource>
+                    <x:Array
+                        Type="{x:Type x:String}">
+                        <x:String>This is a CollectionView!</x:String>
+                        <x:String>Your feedback on the experience of converting a ListView to a CollectionView is incredibly appreciated.</x:String>
+                        <x:String>Here are three general questions:</x:String>
+                        <x:String>1. How was the experience of converting your existing ListView to a CollectionView?</x:String>
+                        <x:String>2. How is the performance compared to the ListView?</x:String>
+                        <x:String>3. Is there a specific piece of functionality that you'd like to see?</x:String>
+                    </x:Array>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>

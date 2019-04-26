@@ -1,4 +1,11 @@
-<div class="absolute"><button  (click)="fullScreen()">Full screen</button></div>
+<div class="absolute">
+    <button (click)="fullScreen()">Full screen</button>
+    <button (click)="animate()">animate</button>
+</div>
+
+<app-reaction *ngFor="let emoji of emojis"
+    [emoji]='emoji'>
+</app-reaction>
 
 <app-player>
 </app-player>

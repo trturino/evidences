@@ -116,6 +116,7 @@ namespace Evidences.API
                     )
                     .HttpRoute("v1/reaction", route => route
                         .HttpFunction<ReactionCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                        .OutputTo.SignalRMessage("karaokeHub")
                     )
                     .SignalR(signalR => signalR
                         .Negotiate<SignalRNegotiateCommand>("/v1/negotiate", AuthorizationTypeEnum.Anonymous, HttpMethod.Post)

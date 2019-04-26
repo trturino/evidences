@@ -17,6 +17,12 @@
         
         <Button Command="{Binding SearchYoutube}"
                 Text="Search Youtube"/>
+        
+        <Entry Text="{Binding Reaction}"
+               Placeholder="Reaction" />
+        
+        <Button Command="{Binding SendReaction}"
+                Text="Send Reaction"/>
 
     </StackLayout>
 

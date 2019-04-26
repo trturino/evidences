@@ -2,16 +2,20 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { SignalrService } from './services/signalr-service/signalr.service';
 import { PlayerService } from './services/player-service/player.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+
 })
 export class AppComponent implements OnInit {
 
   nowPlaying: any;
   queue = [];
   songId: string;
+
+  emojis = [];
 
   constructor(private signalR: SignalrService, private playerService: PlayerService) {  }
 
@@ -33,6 +37,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+  animate() {
+    this.emojis = ['🤑', '💩', '🤩', '😫', '😁', '😍', '🎤'];
+  }
+
   onSongAdded(data) {
     this.queue.push(data);
     this.playerService.playVideo(data);
@@ -45,7 +53,7 @@ export class AppComponent implements OnInit {
   }
 
   onReaction(data) {
-
+    this.emojis.push(data.Reaction);
   }
 
   @HostListener('window:resize', ['$event'])

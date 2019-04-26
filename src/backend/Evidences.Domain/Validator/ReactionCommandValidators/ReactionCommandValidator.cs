@@ -15,7 +15,6 @@ namespace Evidences.Domain.Validator.ReactionCommandValidators
         {
             _songRepository = songRepository;
 
-            RuleFor(x => x.SondId).MustAsync(ValidateSongId).WithMessage("Invalid song");
             RuleFor(x => x.Reaction).NotEmpty().WithMessage("Invalid reaction");
         }
 

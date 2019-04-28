@@ -1,0 +1,100 @@
+h1 {
+  color: white;
+  font-family: AvenirNext;
+  font-weight: bold;
+  font-size: 40pt;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  animation: fadeInLeftBig 400ms;
+  margin: 0;
+  top: 35%;
+  width: 100%;
+}
+
+.score {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+
+  .invisible {
+    opacity: 0;
+  }
+
+  .stars {
+      animation-duration: 0.75s;
+      animation-name: bounceIn;
+
+    .star {
+      display: inline;
+      margin: 10px;
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+
+}
+
+@keyframes fadeInLeftBig {
+  from {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInLeftBig {
+  animation-name: fadeInLeftBig;
+}
+
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.bounceIn {
+  animation-duration: 0.75s;
+  animation-name: bounceIn;
+}
+

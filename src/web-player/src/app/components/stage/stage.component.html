@@ -1,0 +1,10 @@
+<div class="stage">
+  <div class="stage-content">
+    <app-player>
+    </app-player>
+  </div>
+  <div class="curtain-panel">
+    <div [ngClass]="{ 'left-curtain': true, 'curtain': true, 'left-curtain-open':open }"></div>
+    <div [ngClass]="{ 'right-curtain': true, 'curtain': true, 'right-curtain-open':open }"></div>
+  </div>
+</div>

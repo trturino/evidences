@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, Output, EventEmitter } from '@angular/core';
 import { ApiService } from '../api-service/api.service';
 
 @Injectable({
@@ -8,7 +8,11 @@ export class PlayerService {
   player: YT.Player;
   nowPlaying: any;
 
-  constructor(private zone: NgZone, private apiService: ApiService) { }
+  @Output() songHasFinished: EventEmitter<any>;
+
+  constructor(private zone: NgZone, private apiService: ApiService) {
+    this.songHasFinished = new EventEmitter();
+  }
 
   setupPlayer(player) {
     this.player = player;
@@ -23,6 +27,7 @@ export class PlayerService {
     if (state === YT.PlayerState.ENDED) {
       this.apiService.stopPlaying();
       this.nowPlaying = undefined;
+      this.songHasFinished.emit();
     }
 
     if (state === YT.PlayerState.PAUSED) {
@@ -48,6 +53,7 @@ export class PlayerService {
         this.player.loadVideoById(id, seconds || undefined)
       );
     }
+    this.play();
   }
 
   play() {

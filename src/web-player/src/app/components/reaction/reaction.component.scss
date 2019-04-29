@@ -12,6 +12,7 @@
       font-size: 40px;
       position: absolute;
       left: -40px;
+      top: 0px;
       animation: reaction-#{$i} #{random(3000)+5000}ms linear;
     }
   }

@@ -57,17 +57,12 @@ namespace Evidences.ViewModel
             => NavigationService.NavigateAsync("Search");
 
         private Task NowPlayingExecute()
-            => NavigationService.NavigateAsync("Go/NowPlaying");
+            => NavigationService.NavigateAsync("NowPlaying");
 
-        private async Task UpdateNowPlaying(State state)
-        {
-            await ExecuteBusyAction(async () =>
-            {
-                CurrentSong = state.CurrentSong;
-            });
-        }
+        private void UpdateNowPlaying(State state)
+            => CurrentSong = state.CurrentSong;
 
-        private async Task UpdateQueue(State state)
+        private void UpdateQueue(State state)
         {
             SongQueue.Clear();
             SongQueue = new ObservableCollection<Song>(state.Queue);
@@ -75,9 +70,12 @@ namespace Evidences.ViewModel
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            var state = await StateService.GetState();
-            await UpdateNowPlaying(state);
-            await UpdateQueue(state);
+            await ExecuteBusyAction(async () =>
+            {
+                var state = await StateService.GetState();
+                UpdateNowPlaying(state);
+                UpdateQueue(state);
+            });
         }
     }
 }

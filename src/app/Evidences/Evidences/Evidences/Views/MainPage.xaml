@@ -115,7 +115,7 @@
                         Aspect="AspectFill"
                         Grid.Column="0"
                         Source="{Binding CurrentSong.Thumbnail}"
-                        BackgroundColor="{StaticResource lightGrey}" />
+                        BackgroundColor="Transparent" />
                     <Label
                         Grid.Row="0"
                         Grid.Column="1"
@@ -141,7 +141,7 @@
                             NumberOfTapsRequired="1" />
                 </Frame.GestureRecognizers>
             </Frame>
-            <!-- now playing -->
+            <!-- queue -->
             <ListView
                 ItemsSource="{Binding SongQueue}"
                 CachingStrategy="RecycleElement"
@@ -216,20 +216,15 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <!-- activity indicator -->
+            <Grid Grid.Row="0" Grid.RowSpan="7"
+                  BackgroundColor="{StaticResource blackTransparent}"
+                  IsVisible="{Binding IsBusy}">
+                <ActivityIndicator Margin="24,24,24,0" 
+                               HorizontalOptions="Center"
+                               IsRunning="{Binding IsBusy}" 
+                               Color="{StaticResource pumpkinOrange}" />
+            </Grid>
         </Grid>
-        <!--<Button Command="{Binding CreateUser}"
-                Text="Create User"/>
-        
-        <Entry Text="{Binding YoutubeSearchQuery}"
-               Placeholder="Youtube Search" />
-        
-        <Button Command="{Binding SearchYoutube}"
-                Text="Search Youtube"/>
-        
-        <Entry Text="{Binding Reaction}"
-               Placeholder="Reaction" />
-        
-        <Button Command="{Binding SendReaction}"
-                Text="Send Reaction"/>-->
     </ContentPage.Content>
 </ContentPage>

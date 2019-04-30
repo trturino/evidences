@@ -41,6 +41,9 @@ namespace Evidences.ViewModel
 
         private async void SearchYoutubeExecute()
         {
+            await NavigationService.NavigateAsync("../Search");
+            return;
+
             try
             {
                 var results = await YoutubeSearchService.SearchVideo($"{YoutubeSearchQuery} karaoke", 1);

@@ -12,6 +12,8 @@
             <Color x:Key="white">#FFFFFFFF</Color>
             <Color x:Key="grey">#323232</Color>
             <Color x:Key="lightGrey">#ADADAD</Color>
+            <Color x:Key="blackTransparent">#CC1C1C1C</Color>
+            
             
         </ResourceDictionary>
     </Application.Resources>

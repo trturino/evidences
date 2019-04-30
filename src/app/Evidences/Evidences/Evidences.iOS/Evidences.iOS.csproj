@@ -69,6 +69,7 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomRenders\StandardViewCellRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -135,6 +136,12 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.0.0.304370-pre8" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+    <PackageReference Include="System.Reactive">
+      <Version>4.1.5</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Forms">
+      <Version>2.4.6.929</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -150,5 +157,17 @@
     <BundleResource Include="Resources\logoVertical.png" />
     <BundleResource Include="Resources\logoVertical%402x.png" />
     <BundleResource Include="Resources\logoVertical%403x.png" />
+    <BundleResource Include="Resources\chevron.png" />
+    <BundleResource Include="Resources\chevron%402x.png" />
+    <BundleResource Include="Resources\chevron%403x.png" />
+    <BundleResource Include="Resources\close.png" />
+    <BundleResource Include="Resources\close%402x.png" />
+    <BundleResource Include="Resources\close%403x.png" />
+    <BundleResource Include="Resources\addSong.png" />
+    <BundleResource Include="Resources\addSong%402x.png" />
+    <BundleResource Include="Resources\addSong%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CustomRenders\" />
   </ItemGroup>
 </Project>

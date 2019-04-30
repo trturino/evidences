@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    xmlns:behaviors="clr-namespace:Evidences.Behaviors;assembly=Evidences"
+    NavigationPage.HasNavigationBar="False"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Name="Search"
+    BackgroundColor="{StaticResource white}"
+    x:Class="Evidences.Views.SearchPage">
+    <ContentPage.Content>
+        <Grid ColumnSpacing="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="88" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
+                  Padding="0, 52, 0, 9"
+                  BackgroundColor="{StaticResource black}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="33"/>
+                </Grid.ColumnDefinitions>
+                <ImageButton Grid.Column="0"
+                             Margin="17, 0, 0, 0"
+                             HeightRequest="16"
+                             Source="chevron.png" 
+                             Command=" {Binding CloseCommand}"
+                             WidthRequest="16"/>
+                <Entry Grid.Column="1"
+                    Margin="17, 0, 17, 0"
+                    TextColor="{StaticResource white}"
+                    FontSize="20"
+                    Placeholder="Search"
+                    Text="{Binding SearchQuery}"
+                    BackgroundColor="{StaticResource black}">
+                    <Entry.Behaviors>
+                        <behaviors:SearchAsYouTypeBehavior 
+                            SearchCommand="{Binding SearchCommand}"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <ImageButton Grid.Column="2"
+                             Margin="0, 0, 17, 0"
+                             HeightRequest="16"
+                             IsVisible="{Binding IsClearVisible}"
+                             Command="{Binding ClearCommand}"
+                             Source="close.png" 
+                             WidthRequest="16"/>
+            </Grid>
+            
+            <ListView Grid.Row="1"
+                      SeparatorColor="Transparent"
+                      RowHeight="230"
+                      ItemsSource="{Binding Songs}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Margin="24, 12, 24, 12" x:Name="Item" HeightRequest="230">
+                                
+                                <ffimageloading:CachedImage 
+                                        DownsampleToViewSize="true" 
+                                        HeightRequest="230"
+                                        Aspect="AspectFill"
+                                        Source="{Binding Thumbnail}">
+                                </ffimageloading:CachedImage>
+                                    
+                                <ImageButton WidthRequest="64" 
+                                       HeightRequest="64"
+                                       Margin="0, 50, 0, 0"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Start"
+                                       BindingContext="{Binding Source={x:Reference Search}, Path=BindingContext}"   
+                                       Command="{Binding AddItemCommand}"   
+                                       CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"
+                                       Source="addSong.png"/>
+                                    
+                                <Grid BackgroundColor="{StaticResource blackTransparent}"
+                                      VerticalOptions="End"
+                                      HeightRequest="59">
+                                        <Label Text="{Binding Title}"
+                                               FontSize="16" 
+                                               Margin="12, 8, 11, 7"
+                                               FontAttributes="Bold"
+                                               VerticalOptions="End"
+                                               TextColor="{StaticResource white}"/>
+                                        
+                                </Grid>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="0" Grid.RowSpan="2"
+                  BackgroundColor="{StaticResource blackTransparent}"
+                  IsVisible="{Binding IsBusy}">
+                <ActivityIndicator Margin="24,24,24,0" 
+                               HorizontalOptions="Center"
+                               IsRunning="{Binding IsBusy}" 
+                               Color="{StaticResource pumpkinOrange}" />
+            </Grid>
+            
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

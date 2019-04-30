@@ -54,7 +54,7 @@ namespace Evidences.ViewModel
         public DelegateCommand NowPlaying { get; }
 
         private Task SearchYoutubeExecute()
-            => NavigationService.NavigateAsync("Go/Search");
+            => NavigationService.NavigateAsync("Search");
 
         private Task NowPlayingExecute()
             => NavigationService.NavigateAsync("Go/NowPlaying");
@@ -69,11 +69,8 @@ namespace Evidences.ViewModel
 
         private async Task UpdateQueue(State state)
         {
-            await ExecuteBusyAction(async () =>
-            {
-                SongQueue.Clear();
-                SongQueue = new ObservableCollection<Song>(state.Queue);
-            });
+            SongQueue.Clear();
+            SongQueue = new ObservableCollection<Song>(state.Queue);
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)

@@ -50,6 +50,7 @@ namespace Evidences
             containerRegistry.RegisterForNavigation<NavigationPage>("Go");
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Home");
             containerRegistry.RegisterForNavigation<OnboardingPage, OnboardingViewModel>("Onboarding");
+            containerRegistry.RegisterForNavigation<SearchPage, SearchViewModel>("Search");
         }
 
         protected override void OnStart()

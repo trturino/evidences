@@ -6,6 +6,7 @@ using Evidences.Models;
 using Prism.Navigation;
 using Prism.Commands;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Evidences.ViewModel
 {
@@ -14,6 +15,9 @@ namespace Evidences.ViewModel
         protected IYoutubeSearchService YoutubeSearchService { get; }
         protected IReactionService ReactionService { get; }
         protected ISongService SongService { get; }
+
+        private Song currentSong = new Song();
+        private ObservableCollection<Song> songQueue = new ObservableCollection<Song>();
 
         public MainViewModel(IStateService stateService,
             IUserService userService,
@@ -34,24 +38,46 @@ namespace Evidences.ViewModel
             RegisterSignalREvents();
         }
 
-        public string YoutubeSearchQuery { get; set; }
-        public string Reaction { get; set; }
+        public Song CurrentSong
+        {
+            get => currentSong;
+            set => SetProperty(ref currentSong, value);
+        }
+
+        public ObservableCollection<Song> SongQueue
+        {
+            get => songQueue;
+            set => SetProperty(ref songQueue, value);
+        }
+
         public DelegateCommand SearchYoutube { get; }
         public DelegateCommand SendReaction { get; }
 
         private Task SearchYoutubeExecute()
             => NavigationService.NavigateAsync("Go/Search");
 
-        //private async void SendReactionExecute()
-        //{
-        //    try
-        //    {
-        //        await ReactionService.SendReaction(Reaction);
-        //    }
-        //    catch (System.Exception ex)
-        //    {
+        private async Task UpdateNowPlaying(State state)
+        {
+            await ExecuteBusyAction(async () =>
+            {
+                CurrentSong = state.CurrentSong;
+            });
+        }
 
-        //    }
-        //}
+        private async Task UpdateQueue(State state)
+        {
+            await ExecuteBusyAction(async () =>
+            {
+                SongQueue.Clear();
+                SongQueue = new ObservableCollection<Song>(state.Queue);
+            });
+        }
+
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            var state = await StateService.GetState();
+            await UpdateNowPlaying(state);
+            await UpdateQueue(state);
+        }
     }
 }

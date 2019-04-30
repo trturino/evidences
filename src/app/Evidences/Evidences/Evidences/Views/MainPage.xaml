@@ -42,7 +42,7 @@
             <Frame
                 Grid.Row="1"
                 Padding="16"
-                Margin="24,0,24,24"
+                Margin="24,0,24,36"
                 HasShadow="false"
                 BackgroundColor="{StaticResource grey}">
                 <!-- Odin forgive me -->
@@ -78,12 +78,12 @@
                 CornerRadius="32, 32, 0, 0" />
             <Grid
                 Grid.Row="3"
-                Margin="24, 24, 24, 0"
-                HeightRequest="78"
+                Margin="24, 12, 24, 0"
+                HeightRequest="68"
                 BackgroundColor="{StaticResource white}"
                 RowSpacing="0"
                 ColumnSpacing="0">
-              <Grid.Effects>
+                <Grid.Effects>
                     <local:Effects.ShadowEffect
                         BlurRadius="30"
                         ShadowOpacity="99"
@@ -99,36 +99,40 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
-                        Width="0.3*" />
+                        Width="0.35*" />
                     <ColumnDefinition
-                        Width="0.7*" />
+                        Width="0.65*" />
                 </Grid.ColumnDefinitions>
                 <!-- Odin forgive me -->
                 <Image
                     Margin="0"
                     Grid.Row="0"
-                    WidthRequest="60"
                     Grid.RowSpan="3"
+                    Aspect="AspectFill"
                     Grid.Column="0"
+                    Source="{Binding CurrentSong.Thumbnail}"
                     BackgroundColor="{StaticResource lightGrey}" />
                 <Label
                     Grid.Row="0"
                     Grid.Column="1"
+                    FontSize="16"
                     Margin="16, 16, 16, 0"
                     LineBreakMode="TailTruncation"
                     VerticalOptions="End"
-                    Text="Evidências - Chitãozinho…"
+                    Text="{Binding CurrentSong.Title}"
                     TextColor="{StaticResource black}" />
                 <Label
                     Grid.Row="2"
                     Grid.Column="1"
                     Margin="16, 4, 16, 0"
                     VerticalOptions="Start"
+                    FontSize="16"
                     LineBreakMode="TailTruncation"
-                    Text="Added by Turino"
+                    Text="{Binding CurrentSong.UserName}"
                     TextColor="{StaticResource lightGrey}" />
             </Grid>
             <ListView
+                ItemsSource="{Binding SongQueue}"
                 CachingStrategy="RecycleElement"
                 HasUnevenRows="true"
                 SeparatorVisibility="None"
@@ -149,11 +153,12 @@
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
+                        <ViewCell
+                            IsEnabled="false">
                             <Grid
                                 Grid.Row="3"
                                 Margin="24, 10, 24, 8"
-                                HeightRequest="78"
+                                HeightRequest="68"
                                 RowSpacing="0"
                                 ColumnSpacing="0">
                                 <Grid.RowDefinitions>
@@ -164,21 +169,23 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition
-                                        Width="0.3*" />
+                                        Width="0.35*" />
                                     <ColumnDefinition
-                                        Width="0.7*" />
+                                        Width="0.65*" />
                                 </Grid.ColumnDefinitions>
                                 <!-- Odin forgive me -->
                                 <Image
                                     Margin="0"
                                     Grid.Row="0"
-                                    WidthRequest="60"
                                     Grid.RowSpan="3"
+                                    Aspect="AspectFill"
                                     Grid.Column="0"
+                                    Source="{Binding Thumbnail}"
                                     BackgroundColor="{StaticResource lightGrey}" />
                                 <Label
                                     Grid.Row="0"
                                     Grid.Column="1"
+                                    FontSize="16"
                                     Margin="16, 16, 16, 0"
                                     LineBreakMode="TailTruncation"
                                     VerticalOptions="End"
@@ -189,6 +196,7 @@
                                     Grid.Column="1"
                                     Margin="16, 4, 16, 0"
                                     VerticalOptions="Start"
+                                    FontSize="16"
                                     LineBreakMode="TailTruncation"
                                     Text="{Binding AddedByUserName}"
                                     TextColor="{StaticResource lightGrey}" />

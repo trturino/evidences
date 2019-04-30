@@ -12,7 +12,7 @@
             <Color x:Key="white">#FFFFFFFF</Color>
             <Color x:Key="grey">#323232</Color>
             <Color x:Key="lightGrey">#ADADAD</Color>
-            
+            <Color x:Key="brownGrey">#FF8B8B8B</Color>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

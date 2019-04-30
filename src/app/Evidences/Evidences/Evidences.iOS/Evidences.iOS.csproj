@@ -69,6 +69,7 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Effects\ShadowPlatformEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -150,5 +151,11 @@
     <BundleResource Include="Resources\logoVertical.png" />
     <BundleResource Include="Resources\logoVertical%402x.png" />
     <BundleResource Include="Resources\logoVertical%403x.png" />
+    <BundleResource Include="Resources\search.png" />
+    <BundleResource Include="Resources\search%402x.png" />
+    <BundleResource Include="Resources\search%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Effects\" />
   </ItemGroup>
 </Project>

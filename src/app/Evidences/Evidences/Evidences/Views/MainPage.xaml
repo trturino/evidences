@@ -76,61 +76,72 @@
                 Grid.RowSpan="4"
                 BackgroundColor="{StaticResource white}"
                 CornerRadius="32, 32, 0, 0" />
-            <Grid
+            <!-- now playing -->
+            <Frame
                 Grid.Row="3"
                 Margin="24, 12, 24, 0"
                 HeightRequest="68"
-                BackgroundColor="{StaticResource white}"
-                RowSpacing="0"
-                ColumnSpacing="0">
-                <Grid.Effects>
-                    <local:Effects.ShadowEffect
-                        BlurRadius="30"
-                        ShadowOpacity="99"
-                        HorizontalLength="5"
-                        VerticalLength="5"
-                        ShadowColor="{StaticResource lightGrey}" />
-                </Grid.Effects>
-                <Grid.RowDefinitions>
-                    <RowDefinition
-                        Height="auto" />
-                    <RowDefinition
-                        Height="auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition
-                        Width="0.35*" />
-                    <ColumnDefinition
-                        Width="0.65*" />
-                </Grid.ColumnDefinitions>
-                <!-- Odin forgive me -->
-                <Image
-                    Margin="0"
-                    Grid.Row="0"
-                    Grid.RowSpan="3"
-                    Aspect="AspectFill"
-                    Grid.Column="0"
-                    Source="{Binding CurrentSong.Thumbnail}"
-                    BackgroundColor="{StaticResource lightGrey}" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    FontSize="16"
-                    Margin="16, 16, 16, 0"
-                    LineBreakMode="TailTruncation"
-                    VerticalOptions="End"
-                    Text="{Binding CurrentSong.Title}"
-                    TextColor="{StaticResource black}" />
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Margin="16, 4, 16, 0"
-                    VerticalOptions="Start"
-                    FontSize="16"
-                    LineBreakMode="TailTruncation"
-                    Text="{Binding CurrentSong.UserName}"
-                    TextColor="{StaticResource lightGrey}" />
-            </Grid>
+                HasShadow="true"
+                Padding="0"
+                BackgroundColor="{StaticResource white}">
+                <Grid
+                    RowSpacing="0"
+                    ColumnSpacing="0">
+                    <Grid.Effects>
+                        <local:Effects.ShadowEffect
+                            BlurRadius="30"
+                            ShadowOpacity="99"
+                            HorizontalLength="5"
+                            VerticalLength="5"
+                            ShadowColor="{StaticResource lightGrey}" />
+                    </Grid.Effects>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Height="auto" />
+                        <RowDefinition
+                            Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="0.35*" />
+                        <ColumnDefinition
+                            Width="0.65*" />
+                    </Grid.ColumnDefinitions>
+                    <!-- Odin forgive me -->
+                    <Image
+                        Margin="0"
+                        Grid.Row="0"
+                        Grid.RowSpan="3"
+                        Aspect="AspectFill"
+                        Grid.Column="0"
+                        Source="{Binding CurrentSong.Thumbnail}"
+                        BackgroundColor="{StaticResource lightGrey}" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontSize="16"
+                        Margin="16, 16, 16, 0"
+                        LineBreakMode="TailTruncation"
+                        VerticalOptions="End"
+                        Text="{Binding CurrentSong.Title}"
+                        TextColor="{StaticResource black}" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="16, 4, 16, 0"
+                        VerticalOptions="Start"
+                        FontSize="16"
+                        LineBreakMode="TailTruncation"
+                        Text="{Binding CurrentSong.UserName}"
+                        TextColor="{StaticResource lightGrey}" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer
+                            Command="{Binding NowPlaying}"
+                            NumberOfTapsRequired="1" />
+                </Frame.GestureRecognizers>
+            </Frame>
+            <!-- now playing -->
             <ListView
                 ItemsSource="{Binding SongQueue}"
                 CachingStrategy="RecycleElement"

@@ -33,7 +33,7 @@ namespace Evidences.ViewModel
             SongService = songService;
 
             SearchYoutube = new DelegateCommand(async () => await SearchYoutubeExecute());
-            //SendReaction = new DelegateCommand(SendReactionExecute);
+            NowPlaying = new DelegateCommand(async () => await NowPlayingExecute());
 
             RegisterSignalREvents();
         }
@@ -51,10 +51,13 @@ namespace Evidences.ViewModel
         }
 
         public DelegateCommand SearchYoutube { get; }
-        public DelegateCommand SendReaction { get; }
+        public DelegateCommand NowPlaying { get; }
 
         private Task SearchYoutubeExecute()
             => NavigationService.NavigateAsync("Go/Search");
+
+        private Task NowPlayingExecute()
+            => NavigationService.NavigateAsync("Go/NowPlaying");
 
         private async Task UpdateNowPlaying(State state)
         {

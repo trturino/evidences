@@ -1,15 +1,223 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Evidences"
-             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Evidences.Views.MainPage">
-    <StackLayout>
-        <Entry Text="{Binding UserName}"
-               Placeholder="User Name" />
-        
-        <Button Command="{Binding CreateUser}"
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Evidences"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="Evidences.Views.MainPage"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="{StaticResource black}">
+    <ContentPage.Content>
+        <Grid
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="1.8*" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+            <Image
+                Grid.Row="0"
+                AutomationProperties.IsInAccessibleTree="true"
+                AutomationProperties.Name="The AT OK Logo!"
+                AutomationProperties.HelpText="This is an orange logo! It's like a microphone built with the ArcTouch logo."
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Source="logoHorizontal.png"
+                WidthRequest="218"
+                HeightRequest="102" />
+            <Frame
+                Grid.Row="1"
+                Padding="16"
+                Margin="24,0,24,36"
+                HasShadow="false"
+                BackgroundColor="{StaticResource grey}">
+                <!-- Odin forgive me -->
+                <StackLayout
+                    Orientation="Horizontal"
+                    Spacing="16">
+                    <Image
+                        Source="search.png"
+                        HeightRequest="18"
+                        WidthRequest="18" />
+                    <Label
+                        Text="Find song"
+                        TextColor="{StaticResource lightGrey}" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding SearchYoutube}"
+                            NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
+            <Label
+                Grid.Row="2"
+                Margin="24,0,24,0"
+                Text="Now playing"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="{StaticResource pumpkinOrange}" />
+            <BoxView
+                Margin="0, 48, 0, 0"
+                Grid.Row="3"
+                Grid.RowSpan="4"
+                BackgroundColor="{StaticResource white}"
+                CornerRadius="32, 32, 0, 0" />
+            <!-- now playing -->
+            <Frame
+                Grid.Row="3"
+                Margin="24, 12, 24, 0"
+                HeightRequest="68"
+                HasShadow="true"
+                Padding="0"
+                BackgroundColor="{StaticResource white}">
+                <Grid
+                    RowSpacing="0"
+                    ColumnSpacing="0">
+                    <Grid.Effects>
+                        <local:Effects.ShadowEffect
+                            BlurRadius="30"
+                            ShadowOpacity="99"
+                            HorizontalLength="5"
+                            VerticalLength="5"
+                            ShadowColor="{StaticResource lightGrey}" />
+                    </Grid.Effects>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Height="auto" />
+                        <RowDefinition
+                            Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="0.35*" />
+                        <ColumnDefinition
+                            Width="0.65*" />
+                    </Grid.ColumnDefinitions>
+                    <!-- Odin forgive me -->
+                    <Image
+                        Margin="0"
+                        Grid.Row="0"
+                        Grid.RowSpan="3"
+                        Aspect="AspectFill"
+                        Grid.Column="0"
+                        Source="{Binding CurrentSong.Thumbnail}"
+                        BackgroundColor="{StaticResource lightGrey}" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontSize="16"
+                        Margin="16, 16, 16, 0"
+                        LineBreakMode="TailTruncation"
+                        VerticalOptions="End"
+                        Text="{Binding CurrentSong.Title}"
+                        TextColor="{StaticResource black}" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="16, 4, 16, 0"
+                        VerticalOptions="Start"
+                        FontSize="16"
+                        LineBreakMode="TailTruncation"
+                        Text="{Binding CurrentSong.UserName}"
+                        TextColor="{StaticResource lightGrey}" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer
+                            Command="{Binding NowPlaying}"
+                            NumberOfTapsRequired="1" />
+                </Frame.GestureRecognizers>
+            </Frame>
+            <!-- now playing -->
+            <ListView
+                ItemsSource="{Binding SongQueue}"
+                CachingStrategy="RecycleElement"
+                HasUnevenRows="true"
+                SeparatorVisibility="None"
+                SeparatorColor="Transparent"
+                Margin="0, 04, 0 ,0"
+                BackgroundColor="Transparent"
+                Grid.Row="4"
+                Grid.RowSpan="3">
+                <ListView.Header>
+                    <StackLayout
+                        Padding="24, 24, 24, 0">
+                        <Label
+                            Text="Next"
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource brownGrey}" />
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell
+                            IsEnabled="false">
+                            <Grid
+                                Grid.Row="3"
+                                Margin="24, 10, 24, 8"
+                                HeightRequest="68"
+                                RowSpacing="0"
+                                ColumnSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="auto" />
+                                    <RowDefinition
+                                        Height="auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+                                        Width="0.35*" />
+                                    <ColumnDefinition
+                                        Width="0.65*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- Odin forgive me -->
+                                <Image
+                                    Margin="0"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="3"
+                                    Aspect="AspectFill"
+                                    Grid.Column="0"
+                                    Source="{Binding Thumbnail}"
+                                    BackgroundColor="{StaticResource lightGrey}" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontSize="16"
+                                    Margin="16, 16, 16, 0"
+                                    LineBreakMode="TailTruncation"
+                                    VerticalOptions="End"
+                                    Text="{Binding Title}"
+                                    TextColor="{StaticResource black}" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Margin="16, 4, 16, 0"
+                                    VerticalOptions="Start"
+                                    FontSize="16"
+                                    LineBreakMode="TailTruncation"
+                                    Text="{Binding AddedByUserName}"
+                                    TextColor="{StaticResource lightGrey}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <!--<Button Command="{Binding CreateUser}"
                 Text="Create User"/>
         
         <Entry Text="{Binding YoutubeSearchQuery}"
@@ -22,8 +230,6 @@
                Placeholder="Reaction" />
         
         <Button Command="{Binding SendReaction}"
-                Text="Send Reaction"/>
-
-    </StackLayout>
-
+                Text="Send Reaction"/>-->
+    </ContentPage.Content>
 </ContentPage>

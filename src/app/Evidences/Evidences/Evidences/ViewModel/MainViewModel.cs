@@ -5,6 +5,8 @@ using System.Linq;
 using Evidences.Models;
 using Prism.Navigation;
 using Prism.Commands;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Evidences.ViewModel
 {
@@ -13,6 +15,9 @@ namespace Evidences.ViewModel
         protected IYoutubeSearchService YoutubeSearchService { get; }
         protected IReactionService ReactionService { get; }
         protected ISongService SongService { get; }
+
+        private Song currentSong = new Song();
+        private ObservableCollection<Song> songQueue = new ObservableCollection<Song>();
 
         public MainViewModel(IStateService stateService,
             IUserService userService,
@@ -27,63 +32,52 @@ namespace Evidences.ViewModel
             ReactionService = reactionService;
             SongService = songService;
 
-            SearchYoutube = new DelegateCommand(SearchYoutubeExecute);
-            SendReaction = new DelegateCommand(SendReactionExecute);
+            SearchYoutube = new DelegateCommand(async () => await SearchYoutubeExecute());
+            NowPlaying = new DelegateCommand(async () => await NowPlayingExecute());
 
             RegisterSignalREvents();
         }
 
-        public string YoutubeSearchQuery { get; set; }
-        public string Reaction { get; set; }
-        public DelegateCommand SearchYoutube { get; }
-
-        public DelegateCommand SendReaction { get; }
-
-        private async void SearchYoutubeExecute()
+        public Song CurrentSong
         {
-            await NavigationService.NavigateAsync("../Search");
-            return;
-
-            try
-            {
-                var results = await YoutubeSearchService.SearchVideo($"{YoutubeSearchQuery} karaoke", 1);
-                var result = results.FirstOrDefault();
-                if (result == null)
-                {
-                    return;
-                }
-
-                var song = new Song()
-                {
-                    Title = result.Title,
-                    Author = result.Author,
-                    Description = result.Description,
-                    Duration = result.Duration,
-                    Url = result.Url,
-                    Thumbnail = result.Thumbnail,
-                    NoAuthor = result.NoAuthor,
-                    NoDescription = result.NoDescription,
-                    ViewCount = result.ViewCount,
-                    AddedByUser = CurentUser.Id
-                };
-
-                await SongService.Add(song);
-            }
-            catch (System.Exception)
-            {
-            }
+            get => currentSong;
+            set => SetProperty(ref currentSong, value);
         }
 
-        private async void SendReactionExecute()
+        public ObservableCollection<Song> SongQueue
         {
-            try
-            {
-                await ReactionService.SendReaction(Reaction);
-            }
-            catch (System.Exception ex)
-            {
+            get => songQueue;
+            set => SetProperty(ref songQueue, value);
+        }
 
-            }
+        public DelegateCommand SearchYoutube { get; }
+        public DelegateCommand NowPlaying { get; }
+
+        private Task SearchYoutubeExecute()
+            => NavigationService.NavigateAsync("Search");
+
+        private Task NowPlayingExecute()
+            => NavigationService.NavigateAsync("Go/NowPlaying");
+
+        private async Task UpdateNowPlaying(State state)
+        {
+            await ExecuteBusyAction(async () =>
+            {
+                CurrentSong = state.CurrentSong;
+            });
+        }
+
+        private async Task UpdateQueue(State state)
+        {
+            SongQueue.Clear();
+            SongQueue = new ObservableCollection<Song>(state.Queue);
+        }
+
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            var state = await StateService.GetState();
+            await UpdateNowPlaying(state);
+            await UpdateQueue(state);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Evidences.ViewModel
         protected IStateService StateService { get; }
         protected INavigationService NavigationService { get; }
 
+        private bool isBusy;
+
         protected BaseViewModel(IStateService stateService,
             IUserService userService,
             ISignalRService signaRService,
@@ -26,8 +28,17 @@ namespace Evidences.ViewModel
             NavigationService = navigationService;
         }
 
-        public bool IsNotBusy { get { return !IsBusy; } }
-        public bool IsBusy { get; set; }
+        public bool IsNotBusy
+        {
+            get => !isBusy;
+        }
+
+        public bool IsBusy
+        {
+            get => isBusy;
+            set => SetProperty(ref isBusy, value);
+        }
+
         public User CurentUser => UserService.Get();
 
         protected virtual void RegisterSignalREvents()

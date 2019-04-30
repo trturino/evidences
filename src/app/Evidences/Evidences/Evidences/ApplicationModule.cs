@@ -77,6 +77,10 @@ namespace Evidences
             builder
                 .RegisterType<YoutubeSearchService>()
                 .As<IYoutubeSearchService>();
+
+            builder
+                .RegisterType<ReactionService>()
+                .As<IReactionService>();
         }
 
         //private void RegisterViewModel(ContainerBuilder builder)

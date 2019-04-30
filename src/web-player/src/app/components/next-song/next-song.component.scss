@@ -1,0 +1,116 @@
+$card-size: 100px;
+
+.next-song {
+  position: absolute;
+  width: 500px;
+  top: 70%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+
+  .container {
+    position: relative;
+    h1 {
+      color: white;
+      font-family: AvenirNext;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .song {
+      border-radius: 5px;
+      width: 500px;
+      height: $card-size;
+      background-color: white;
+      overflow: hidden;
+      box-shadow: 2px 5px 15px 0px rgba(0,0,0,0.25);
+
+      .empty-state {
+        font-family: AvenirNext;
+        color: gray;
+        position: absolute;
+        top: 70%;
+        width: 100%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        font-size: 14pt;
+        text-align: center;
+      }
+
+      .song-to-start {
+        .thumb {
+          position:relative;
+          float: left;
+          height: $card-size;
+          padding: 0px;
+          margin: 0px;
+          img {
+            height: $card-size;
+          }
+        }
+
+        .song-info {
+          font-family: AvenirNext;
+          float: left;
+          padding-left: 20px;
+          width: 300px;
+          .song-title {
+            font-weight: 500;
+            height: 19px;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+            margin-bottom: 5px;
+            margin-top: 33px;
+            padding-right: 20px;
+          }
+
+          .added-by {
+          }
+        }
+
+        .play-button {
+          position: absolute;
+          bottom: 0px;
+          right: 0px;
+          width: 35px;
+          height: 35px;
+          margin: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(-50%, 20%, 0);
+  }
+}
+
+.fadeOutDown {
+  animation: fadeOutDown 200ms;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(-50%, 20%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0);
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp 300ms;
+  opacity: 1;
+}

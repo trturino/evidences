@@ -1,0 +1,89 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.stage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin: 0;
+}
+
+.stage-content:after {
+  text-align: center;
+  display: block;
+  transform: translateY(0.5em);
+  font-size: 1.1em;
+}
+
+.curtain-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.curtain-panel {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.curtain-panel .curtain {
+  width: 50%;
+  background-image: repeating-linear-gradient(to right, #1e1e1e 0px, #2c2c2c 30px, #1e1e1e 60px);;
+  position: relative;
+  transition: transform 0.5s ease-out;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.curtain-panel .curtain:before {
+  text-align: center;
+  width: 200%;
+  position: absolute;
+  top: 50%;
+  line-height: 0;
+  font-size: 1.1em;
+  text-shadow: 1px 1px 3px #ccc;
+}
+
+.curtain-panel .left-curtain:before {
+  left: 0;
+}
+
+.curtain-panel .right-curtain:before {
+  right: 0;
+}
+
+.curtain-panel .curtain:after {
+  content: '';
+  background-size: 60px 60px;
+  background-image: radial-gradient(circle at 30px -15px, rgba(0, 0, 0, 0) 36px, #000 37px);
+  display: block;
+  height: 25px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.curtain-trigger {
+  opacity: 0;
+  position: absolute;
+}
+
+.left-curtain-open {
+  transform: translateX(-100%);
+}
+
+.right-curtain-open {
+  transform: translateX(100%);
+}

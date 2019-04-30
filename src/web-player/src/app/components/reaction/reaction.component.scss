@@ -1,0 +1,57 @@
+@function generate-scale() {
+  @return random()+1;
+}
+
+@function generate-y() {
+   @return random()*300;
+}
+
+.emoji {
+  @for $i from 1 through 1000 {
+    &-#{$i} {
+      font-size: 40px;
+      position: absolute;
+      left: -40px;
+      top: 0px;
+      animation: reaction-#{$i} #{random(3000)+5000}ms linear;
+    }
+  }
+
+}
+
+@for $i from 1 through 1000 {
+  @keyframes reaction-#{$i} {
+    0% {
+     left: 100vw;
+     opacity: 1;
+     transform: translateY(#{generate-y()}px) rotate(0deg) scale(generate-scale());
+    }
+    20% {
+     left: 80vw;
+     opacity: 1;
+     transform: translateY(#{generate-y()}px) rotate(-20deg) scale(generate-scale());
+    }
+    40% {
+     left: 60vw;
+     opacity: 1;
+     transform: translateY(#{generate-y()}px) rotate(0deg) scale(generate-scale());
+    }
+    60% {
+     left: 40vw;
+     opacity: .8;
+     transform: translateY(#{generate-y()}px) rotate(20deg) scale(generate-scale());
+    }
+    80% {
+     left: 20vw;
+     opacity: .5;
+     transform: translateY(#{generate-y()}px) rotate(0deg) scale(generate-scale());
+    }
+    100% {
+     left: 0px;
+     opacity: 0;
+     transform: translateY(#{generate-y()}px) rotate(-20deg) scale(generate-scale());
+    }
+   }
+}
+
+

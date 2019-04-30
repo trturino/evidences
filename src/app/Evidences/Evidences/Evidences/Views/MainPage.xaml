@@ -85,5 +85,19 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
+        <!--<Button Command="{Binding CreateUser}"
+                Text="Create User"/>
+        
+        <Entry Text="{Binding YoutubeSearchQuery}"
+               Placeholder="Youtube Search" />
+        
+        <Button Command="{Binding SearchYoutube}"
+                Text="Search Youtube"/>
+        
+        <Entry Text="{Binding Reaction}"
+               Placeholder="Reaction" />
+        
+        <Button Command="{Binding SendReaction}"
+                Text="Send Reaction"/>-->
     </ContentPage.Content>
 </ContentPage>

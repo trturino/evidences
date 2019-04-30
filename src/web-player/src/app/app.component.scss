@@ -1,3 +1,33 @@
-.absolute {
+.hack {
   position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.logo {
+  position: absolute;
+  top: 20%;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  img {
+    width: 217pt;
+    height: 102pt;
+  }
+}
+
+@keyframes slideOutUp {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    transform: translate3d(0, -230%, 0);
+  }
+}
+
+.slideOutUp {
+  animation: slideOutUp 200ms;
+  transform: translate3d(0, -230%, 0);
 }

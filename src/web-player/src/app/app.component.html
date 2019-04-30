@@ -1,4 +1,19 @@
-<div class="absolute"><button  (click)="fullScreen()">Full screen</button></div>
+<app-stage [open]="stageOpened"></app-stage>
 
-<app-player>
-</app-player>
+<app-score *ngIf="showScore"></app-score>
+
+<div class="logo" [ngClass]="{ 'logo': true, 'slideOutUp': !showLogo }" ><img src="../assets/logo.png" alt="logo"></div>
+
+<app-next-song (playSong)="playSong()" [isVisible]="showNextSong" [nextSong]="nextSong"></app-next-song>
+
+<div class="hack" *ngIf='isHackVisible'>
+  <button (click)="fullScreen()">Full screen</button>
+  <button (click)="animate()">animate</button>
+  <button (click)="stage()">stage</button>
+  <button (click)="score()">score</button>
+</div>
+
+<app-reaction *ngFor="let emoji of emojis"
+    [emoji]='emoji'>
+</app-reaction>
+

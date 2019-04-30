@@ -5,6 +5,7 @@ using System.Linq;
 using Evidences.Models;
 using Prism.Navigation;
 using Prism.Commands;
+using System.Threading.Tasks;
 
 namespace Evidences.ViewModel
 {
@@ -27,8 +28,8 @@ namespace Evidences.ViewModel
             ReactionService = reactionService;
             SongService = songService;
 
-            SearchYoutube = new DelegateCommand(SearchYoutubeExecute);
-            SendReaction = new DelegateCommand(SendReactionExecute);
+            SearchYoutube = new DelegateCommand(async () => await SearchYoutubeExecute());
+            //SendReaction = new DelegateCommand(SendReactionExecute);
 
             RegisterSignalREvents();
         }
@@ -36,51 +37,21 @@ namespace Evidences.ViewModel
         public string YoutubeSearchQuery { get; set; }
         public string Reaction { get; set; }
         public DelegateCommand SearchYoutube { get; }
-
         public DelegateCommand SendReaction { get; }
 
-        private async void SearchYoutubeExecute()
-        {
-            try
-            {
-                var results = await YoutubeSearchService.SearchVideo($"{YoutubeSearchQuery} karaoke", 1);
-                var result = results.FirstOrDefault();
-                if (result == null)
-                {
-                    return;
-                }
+        private Task SearchYoutubeExecute()
+            => NavigationService.NavigateAsync("Go/Search");
 
-                var song = new Song()
-                {
-                    Title = result.Title,
-                    Author = result.Author,
-                    Description = result.Description,
-                    Duration = result.Duration,
-                    Url = result.Url,
-                    Thumbnail = result.Thumbnail,
-                    NoAuthor = result.NoAuthor,
-                    NoDescription = result.NoDescription,
-                    ViewCount = result.ViewCount,
-                    AddedByUser = CurentUser.Id
-                };
+        //private async void SendReactionExecute()
+        //{
+        //    try
+        //    {
+        //        await ReactionService.SendReaction(Reaction);
+        //    }
+        //    catch (System.Exception ex)
+        //    {
 
-                await SongService.Add(song);
-            }
-            catch (System.Exception)
-            {
-            }
-        }
-
-        private async void SendReactionExecute()
-        {
-            try
-            {
-                await ReactionService.SendReaction(Reaction);
-            }
-            catch (System.Exception ex)
-            {
-
-            }
-        }
+        //    }
+        //}
     }
 }

@@ -28,6 +28,7 @@
     <Folder Include="Models\Requests\" />
     <Folder Include="ViewModel\Base\" />
     <Folder Include="Views\" />
+    <Folder Include="Effects\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="ViewModel\Base\ViewModelLocator.cs" />

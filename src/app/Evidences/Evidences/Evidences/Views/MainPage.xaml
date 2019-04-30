@@ -39,14 +39,30 @@
                 Source="logoHorizontal.png"
                 WidthRequest="218"
                 HeightRequest="102" />
-            <Entry
+            <Frame
                 Grid.Row="1"
+                Padding="16"
                 Margin="24,0,24,24"
-                Placeholder="Find song"
-                HeightRequest="48"
-                Text="{Binding YoutubeSearchQuery}"
-                TextColor="{StaticResource lightGrey}"
-                BackgroundColor="{StaticResource grey}" />
+                HasShadow="false"
+                BackgroundColor="{StaticResource grey}">
+                <!-- Odin forgive me -->
+                <StackLayout
+                    Orientation="Horizontal"
+                    Spacing="16">
+                    <Image
+                        Source="search.png"
+                        HeightRequest="18"
+                        WidthRequest="18" />
+                    <Label
+                        Text="Find song"
+                        TextColor="{StaticResource lightGrey}" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding SearchYoutube}"
+                            NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
             <Label
                 Grid.Row="2"
                 Margin="24,0,24,0"
@@ -60,28 +76,125 @@
                 Grid.RowSpan="4"
                 BackgroundColor="{StaticResource white}"
                 CornerRadius="32, 32, 0, 0" />
-            <Frame
-                HeightRequest="38"
+            <Grid
+                Grid.Row="3"
                 Margin="24, 24, 24, 0"
-                Grid.Row="3">
-            </Frame>
+                HeightRequest="78"
+                BackgroundColor="{StaticResource white}"
+                RowSpacing="0"
+                ColumnSpacing="0">
+              <Grid.Effects>
+                    <local:Effects.ShadowEffect
+                        BlurRadius="30"
+                        ShadowOpacity="99"
+                        HorizontalLength="5"
+                        VerticalLength="5"
+                        ShadowColor="{StaticResource lightGrey}" />
+                </Grid.Effects>
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="auto" />
+                    <RowDefinition
+                        Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="0.3*" />
+                    <ColumnDefinition
+                        Width="0.7*" />
+                </Grid.ColumnDefinitions>
+                <!-- Odin forgive me -->
+                <Image
+                    Margin="0"
+                    Grid.Row="0"
+                    WidthRequest="60"
+                    Grid.RowSpan="3"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource lightGrey}" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="16, 16, 16, 0"
+                    LineBreakMode="TailTruncation"
+                    VerticalOptions="End"
+                    Text="Evidências - Chitãozinho…"
+                    TextColor="{StaticResource black}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="16, 4, 16, 0"
+                    VerticalOptions="Start"
+                    LineBreakMode="TailTruncation"
+                    Text="Added by Turino"
+                    TextColor="{StaticResource lightGrey}" />
+            </Grid>
             <ListView
-                Margin="0, 24, 0 ,0"
+                CachingStrategy="RecycleElement"
+                HasUnevenRows="true"
+                SeparatorVisibility="None"
+                SeparatorColor="Transparent"
+                Margin="0, 04, 0 ,0"
                 BackgroundColor="Transparent"
                 Grid.Row="4"
                 Grid.RowSpan="3">
-                <ListView.ItemsSource>
-                    <x:Array
-                        Type="{x:Type x:String}">
-                        <x:String>This is a CollectionView!</x:String>
-                        <x:String>Your feedback on the experience of converting a ListView to a CollectionView is incredibly appreciated.</x:String>
-                        <x:String>Here are three general questions:</x:String>
-                        <x:String>1. How was the experience of converting your existing ListView to a CollectionView?</x:String>
-                        <x:String>2. How is the performance compared to the ListView?</x:String>
-                        <x:String>3. Is there a specific piece of functionality that you'd like to see?</x:String>
-                    </x:Array>
-                </ListView.ItemsSource>
+                <ListView.Header>
+                    <StackLayout
+                        Padding="24, 24, 24, 0">
+                        <Label
+                            Text="Next"
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource brownGrey}" />
+                    </StackLayout>
+                </ListView.Header>
                 <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid
+                                Grid.Row="3"
+                                Margin="24, 10, 24, 8"
+                                HeightRequest="78"
+                                RowSpacing="0"
+                                ColumnSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="auto" />
+                                    <RowDefinition
+                                        Height="auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+                                        Width="0.3*" />
+                                    <ColumnDefinition
+                                        Width="0.7*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- Odin forgive me -->
+                                <Image
+                                    Margin="0"
+                                    Grid.Row="0"
+                                    WidthRequest="60"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="0"
+                                    BackgroundColor="{StaticResource lightGrey}" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="16, 16, 16, 0"
+                                    LineBreakMode="TailTruncation"
+                                    VerticalOptions="End"
+                                    Text="{Binding Title}"
+                                    TextColor="{StaticResource black}" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Margin="16, 4, 16, 0"
+                                    VerticalOptions="Start"
+                                    LineBreakMode="TailTruncation"
+                                    Text="{Binding AddedByUserName}"
+                                    TextColor="{StaticResource lightGrey}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>

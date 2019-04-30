@@ -15,7 +15,9 @@
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 using System;
+using System.Threading.Tasks;
 using Evidences.Services;
+using Prism.Commands;
 using Prism.Navigation;
 using Xamarin.Forms;
 
@@ -29,8 +31,13 @@ namespace Evidences.ViewModel
             INavigationService navigationService)
             : base(stateService, userService, signaRService, navigationService)
         {
-
+            CloseCommand = new DelegateCommand(async () => await CloseExecute());
         }
+
+        public DelegateCommand CloseCommand { get; }
+
+        public Task CloseExecute()
+            => NavigationService.GoBackAsync();
     }
 }
 

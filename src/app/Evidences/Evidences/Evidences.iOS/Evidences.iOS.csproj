@@ -1,13 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project
-    ToolsVersion="4.0"
-    DefaultTargets="Build"
-    xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <Configuration
-            Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform
-            Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
         <ProductVersion>8.0.30703</ProductVersion>
         <SchemaVersion>2.0</SchemaVersion>
         <ProjectGuid>{997D45B6-5C10-4E5A-933C-102C9677D9C6}</ProjectGuid>
@@ -20,8 +15,7 @@
         <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
         <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     </PropertyGroup>
-    <PropertyGroup
-        Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
@@ -34,8 +28,7 @@
         <MtouchLink>None</MtouchLink>
         <MtouchDebug>true</MtouchDebug>
     </PropertyGroup>
-    <PropertyGroup
-        Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
         <DebugType>none</DebugType>
         <Optimize>true</Optimize>
         <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
@@ -45,8 +38,7 @@
         <MtouchArch>x86_64</MtouchArch>
         <ConsolePause>false</ConsolePause>
     </PropertyGroup>
-    <PropertyGroup
-        Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
@@ -60,8 +52,7 @@
         <MtouchDebug>true</MtouchDebug>
         <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
-    <PropertyGroup
-        Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
         <DebugType>none</DebugType>
         <Optimize>true</Optimize>
         <OutputPath>bin\iPhone\Release</OutputPath>
@@ -73,178 +64,124 @@
         <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
     <ItemGroup>
-        <Compile
-            Include="Main.cs" />
-        <Compile
-            Include="AppDelegate.cs" />
-        <None
-            Include="Entitlements.plist" />
-        <None
-            Include="Info.plist" />
-        <Compile
-            Include="Properties\AssemblyInfo.cs" />
-        <Compile
-            Include="Effects\ShadowPlatformEffect.cs" />
-        <Compile
-            Include="CustomRenders\StandardViewCellRenderer.cs" />
+        <Compile Include="Main.cs" />
+        <Compile Include="AppDelegate.cs" />
+        <None Include="Entitlements.plist" />
+        <None Include="Info.plist" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Effects\ShadowPlatformEffect.cs" />
+        <Compile Include="CustomRenders\StandardViewCellRenderer.cs" />
     </ItemGroup>
     <ItemGroup>
-        <InterfaceDefinition
-            Include="Resources\LaunchScreen.storyboard" />
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
+        <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset
-            Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
             <Visible>false</Visible>
         </ImageAsset>
     </ItemGroup>
     <ItemGroup>
-        <Reference
-            Include="System" />
-        <Reference
-            Include="System.Xml" />
-        <Reference
-            Include="System.Core" />
-        <Reference
-            Include="Xamarin.iOS" />
-        <Reference
-            Include="System.Numerics" />
-        <Reference
-            Include="System.Numerics.Vectors" />
+        <Reference Include="System" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Core" />
+        <Reference Include="Xamarin.iOS" />
+        <Reference Include="System.Numerics" />
+        <Reference Include="System.Numerics.Vectors" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference
-            Include="Autofac">
+        <PackageReference Include="Autofac">
             <Version>4.9.2</Version>
         </PackageReference>
-        <PackageReference
-            Include="Microsoft.AspNetCore.SignalR.Client">
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client">
             <Version>1.1.0</Version>
         </PackageReference>
-        <PackageReference
-            Include="Refit">
+        <PackageReference Include="Refit">
             <Version>4.6.107</Version>
         </PackageReference>
-        <PackageReference
-            Include="Xamarin.Forms"
-            Version="4.0.0.304370-pre8" />
-        <PackageReference
-            Include="Xamarin.Essentials"
-            Version="1.1.0" />
-        <PackageReference
-            Include="System.Reactive">
+        <PackageReference Include="Xamarin.Forms" Version="4.0.0.304370-pre8" />
+        <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+        <PackageReference Include="System.Reactive">
             <Version>4.1.5</Version>
         </PackageReference>
-        <PackageReference
-            Include="Xamarin.FFImageLoading.Forms">
+        <PackageReference Include="Xamarin.FFImageLoading.Forms">
             <Version>2.4.6.929</Version>
         </PackageReference>
     </ItemGroup>
-    <Import
-        Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+    <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
     <ItemGroup>
-        <ProjectReference
-            Include="..\Evidences\Evidences.csproj">
+        <ProjectReference Include="..\Evidences\Evidences.csproj">
             <Project>{176F1EFB-131E-4AFA-8FF7-7840ABD877A1}</Project>
             <Name>Evidences</Name>
         </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-        <BundleResource
-            Include="Resources\logoHorizontal.png" />
-        <BundleResource
-            Include="Resources\logoHorizontal%402x.png" />
-        <BundleResource
-            Include="Resources\logoHorizontal%403x.png" />
-        <BundleResource
-            Include="Resources\logoVertical.png" />
-        <BundleResource
-            Include="Resources\logoVertical%402x.png" />
-        <BundleResource
-            Include="Resources\logoVertical%403x.png" />
-        <BundleResource
-            Include="Resources\search.png" />
-        <BundleResource
-            Include="Resources\search%402x.png" />
-        <BundleResource
-            Include="Resources\search%403x.png" />
-        <BundleResource
-            Include="Resources\fakeSong.jpeg" />
+        <BundleResource Include="Resources\logoHorizontal.png" />
+        <BundleResource Include="Resources\logoHorizontal%402x.png" />
+        <BundleResource Include="Resources\logoHorizontal%403x.png" />
+        <BundleResource Include="Resources\logoVertical.png" />
+        <BundleResource Include="Resources\logoVertical%402x.png" />
+        <BundleResource Include="Resources\logoVertical%403x.png" />
+        <BundleResource Include="Resources\search.png" />
+        <BundleResource Include="Resources\search%402x.png" />
+        <BundleResource Include="Resources\search%403x.png" />
+        <BundleResource Include="Resources\fakeSong.jpeg" />
+        <BundleResource Include="Resources\filled.png" />
+        <BundleResource Include="Resources\filled%402x.png" />
+        <BundleResource Include="Resources\filled%403x.png" />
+        <BundleResource Include="Resources\notfilled.png" />
+        <BundleResource Include="Resources\notfilled%402x.png" />
+        <BundleResource Include="Resources\notfilled%403x.png" />
     </ItemGroup>
     <ItemGroup>
-        <Folder
-            Include="Effects\" />
-        <BundleResource
-            Include="Resources\chevron.png" />
-        <BundleResource
-            Include="Resources\chevron%402x.png" />
-        <BundleResource
-            Include="Resources\chevron%403x.png" />
-        <BundleResource
-            Include="Resources\close.png" />
-        <BundleResource
-            Include="Resources\close%402x.png" />
-        <BundleResource
-            Include="Resources\close%403x.png" />
-        <BundleResource
-            Include="Resources\addSong.png" />
-        <BundleResource
-            Include="Resources\addSong%402x.png" />
-        <BundleResource
-            Include="Resources\addSong%403x.png" />
+        <Folder Include="Effects\" />
+        <BundleResource Include="Resources\chevron.png" />
+        <BundleResource Include="Resources\chevron%402x.png" />
+        <BundleResource Include="Resources\chevron%403x.png" />
+        <BundleResource Include="Resources\close.png" />
+        <BundleResource Include="Resources\close%402x.png" />
+        <BundleResource Include="Resources\close%403x.png" />
+        <BundleResource Include="Resources\addSong.png" />
+        <BundleResource Include="Resources\addSong%402x.png" />
+        <BundleResource Include="Resources\addSong%403x.png" />
     </ItemGroup>
     <ItemGroup>
-        <Folder
-            Include="CustomRenders\" />
+        <Folder Include="CustomRenders\" />
     </ItemGroup>
 </Project>

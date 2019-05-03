@@ -3,10 +3,17 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    xmlns:conv="clr-namespace:Evidences.ValueConverters;assembly=Evidences"
     NavigationPage.HasNavigationBar="False"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     prism:ViewModelLocator.AutowireViewModel="True"
     x:Class="Evidences.Views.NowPlayingPage"
     BackgroundColor="{StaticResource black}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:BoolStarConverter x:Key="starConv" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid
             Padding="0, 0, 0, 0"
@@ -24,13 +31,13 @@
                 <RowDefinition
                     Height="*" />
             </Grid.RowDefinitions>
-            <Image
+            <ffimageloading:CachedImage
+                DownsampleToViewSize="true" 
                 Aspect="AspectFill"
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                BackgroundColor="Red"
-                Source="fakeSong.jpeg"
+                Source="{Binding CurrentSong.Thumbnail}"
                 HeightRequest="400" />
             <!-- close button -->
             <Grid
@@ -58,12 +65,12 @@
             </Grid>
             <Label
                 Margin="24, 24, 24, 12"
-                FontSize="32"
+                FontSize="22"
                 FontAttributes="Bold"
                 LineBreakMode="WordWrap"
                 Grid.Row="2"
                 Grid.ColumnSpan="2"
-                Text="Evidências - Chitãozinho e Xororó"
+                Text="{Binding CurrentSong.Title}"
                 TextColor="{StaticResource white}" />
             <Label
                 Margin="24, 0, 24, 0"
@@ -72,7 +79,7 @@
                 LineBreakMode="WordWrap"
                 Grid.Row="3"
                 Grid.ColumnSpan="2"
-                Text="Added by Turino"
+                Text="{Binding AddedBy}"
                 TextColor="{StaticResource lightGrey}" />
             <!-- stars -->
             <Grid
@@ -95,21 +102,22 @@
                     <ColumnDefinition
                         Width="0.2*" />
                 </Grid.ColumnDefinitions>
-                <Image
+                <ImageButton
                     Grid.Column="0"
-                    Source="filled.png" />
-                <Image
+                    Source="{Binding Star1, Converter={StaticResource starConv}}" />
+                <ImageButton
                     Grid.Column="1"
-                    Source="filled.png" />
-                <Image
+                    Source="{Binding Star2, Converter={StaticResource starConv}}" />
+                <ImageButton
                     Grid.Column="2"
-                    Source="filled.png" />
-                <Image
+                    Source="{Binding Star3, Converter={StaticResource starConv}}" />
+                <ImageButton
                     Grid.Column="3"
-                    Source="filled.png" />
-                <Image
+                    Source="{Binding Star4, Converter={StaticResource starConv}}" />
+                <ImageButton
                     Grid.Column="4"
-                    Source="notfilled.png" />
+                    Source="{Binding Star5, Converter={StaticResource starConv}}"
+                    Command="{Binding Star5Command}"/>
             </Grid>
             <!-- emojis -->
             <BoxView

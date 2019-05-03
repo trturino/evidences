@@ -20,11 +20,15 @@ using Evidences.Services;
 using Prism.Commands;
 using Prism.Navigation;
 using Xamarin.Forms;
+using Evidences.Models;
+using System.Windows.Input;
 
 namespace Evidences.ViewModel
 {
     public class NowPlayingViewModel : BaseViewModel
     {
+        public CurrentSong CurrentSong { get; set; }
+
         public NowPlayingViewModel(IStateService stateService,
             IUserService userService,
             ISignalRService signaRService,
@@ -32,12 +36,45 @@ namespace Evidences.ViewModel
             : base(stateService, userService, signaRService, navigationService)
         {
             CloseCommand = new DelegateCommand(async () => await CloseExecute());
+            Star5Command = new DelegateCommand(async () => await Star5Execute());
         }
 
-        public DelegateCommand CloseCommand { get; }
+
+        public ICommand CloseCommand { get; }
 
         public Task CloseExecute()
             => NavigationService.GoBackAsync();
+
+        public string AddedBy => $"Added by PedroK";
+
+        public bool Star1 { get; set; }
+        public bool Star2 { get; set; }
+        public bool Star3 { get; set; }
+        public bool Star4 { get; set; }
+        public bool Star5 { get; set; }
+
+        public ICommand Star5Command { get; }
+
+        public async Task Star5Execute()
+        {
+            Star1 = true;
+            Star2 = true;
+            Star3 = true;
+            Star4 = true;
+            Star5 = true;
+        }
+
+
+        public override void OnNavigatingTo(INavigationParameters parameters)
+        {
+            base.OnNavigatingTo(parameters);
+                
+            if (parameters.TryGetValue("song", out CurrentSong song))
+            {
+                this.CurrentSong = song;
+            }
+        }
+
     }
 }
 

@@ -23,6 +23,11 @@ namespace Evidences.Domain.Handlers.QueryHandlers.StateQueryHandlers
             var currentSong = await _currentSongRepository.FirstOrDefault();
             var queue = await _songRepository.GetAll(x => x.Finished == false);
 
+            if (currentSong != null) 
+            {
+                queue = queue.Where(x => x.Id != currentSong.SongId);
+            }
+
             var state = new State()
             {
                 CurrentSong = currentSong,

@@ -23,22 +23,27 @@ using System.Diagnostics;
 using System.Collections.ObjectModel;
 using Evidences.YouTube;
 using System.Linq;
+using Evidences.Models;
 
 namespace Evidences.ViewModel
 {
     public class SearchViewModel : BaseViewModel
     {
         protected IYoutubeSearchService YoutubeSearchService { get; }
+        protected ISongService SongService { get; }
 
         public SearchViewModel(
             IStateService stateService,
             IUserService userService,
             ISignalRService signaRService,
             INavigationService navigationService,
+            ISongService songService,
             IYoutubeSearchService youtubeSearchService) :
              base(stateService, userService, signaRService, navigationService)
         {
             YoutubeSearchService = youtubeSearchService;
+            SongService = songService;
+
             SearchCommand = new DelegateCommand(async () => await SearchExecute())
                 .ObservesCanExecute(() => IsNotBusy);
 
@@ -107,7 +112,7 @@ namespace Evidences.ViewModel
             }
             catch (System.Exception ex)
             {
-                Debug.Print(ex.ToString());
+                Debug.WriteLine(ex);
             }
         }
 
@@ -117,9 +122,38 @@ namespace Evidences.ViewModel
             Songs.Clear();
         }
 
-        public async Task AddItemExecute(object o)
+        public async Task AddItemExecute(VideoInformation o)
         {
-            Debug.Print(o.ToString());
+            try
+            {
+                if (o == null)
+                {
+                    return;
+                }
+
+                await ExecuteBusyAction(async () =>
+                {
+                    var song = new Song(o, UserService.Get().Id);
+                    await SongService.Add(song);
+
+                    await CloseExecute();
+                });
+            }
+            catch (System.Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            if (parameters.TryGetValue("query", out string query))
+            {
+                SearchQuery = query;
+                SearchCommand?.Execute(null);
+            }
         }
     }
 }

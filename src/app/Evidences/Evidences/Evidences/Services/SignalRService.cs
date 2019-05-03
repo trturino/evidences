@@ -22,7 +22,7 @@ namespace Evidences.Services
             _signalRRepository = signalRRepository;
         }
 
-        public bool IsConnected => _hubConnection != null;
+        public bool IsConnected { get; private set; }
 
         public event EventHandler<Song> OnSongAdded;
 
@@ -37,6 +37,8 @@ namespace Evidences.Services
             await CreateConnection();
 
             await _hubConnection.StartAsync();
+
+            IsConnected = true;
         }
 
         public async Task Disconnect()

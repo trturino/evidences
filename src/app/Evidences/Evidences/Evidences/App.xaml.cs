@@ -47,7 +47,7 @@ namespace Evidences
             var builder = containerRegistry.GetBuilder();
             builder.RegisterModule(new ApplicationModule());
 
-            containerRegistry.RegisterForNavigation<NavigationPage>("Go");
+            containerRegistry.RegisterForNavigation<AppNavigationPage>("Go");
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Home");
             containerRegistry.RegisterForNavigation<OnboardingPage, OnboardingViewModel>("Onboarding");
             containerRegistry.RegisterForNavigation<SearchPage, SearchViewModel>("Search");

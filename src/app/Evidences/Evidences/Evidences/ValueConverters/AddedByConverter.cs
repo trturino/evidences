@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NowPlayingPage.xaml.cs" company="ArcTouch LLC">
+// <copyright file="AddedByConverter.cs" company="ArcTouch LLC">
 //   Copyright 2019 ArcTouch LLC.
 //   All rights reserved.
 //
@@ -11,27 +11,25 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the NowPlayingPage.xaml type.
+//   Defines the AddedByConverter type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Globalization;
 using Xamarin.Forms;
 
-namespace Evidences.Views
+namespace Evidences.ValueConverters
 {
-    public partial class NowPlayingPage : ContentPage
+    public class AddedByConverter : IValueConverter
     {
-        public NowPlayingPage()
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            InitializeComponent();
+            return $"Added by {value}";
         }
 
-        async void Handle_Tapped(object sender, System.EventArgs e)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var label = sender as Label;
-            label.ScaleTo(1.5, 200);
-            await label.FadeTo(0.5, 200);
-            label.Scale = 1;
-            label.Opacity = 1;
+            throw new NotSupportedException();
         }
     }
 }

@@ -6,10 +6,10 @@
         Your queue is empty, add a song and start singing
       </div>
       <div *ngIf="nextSong" class="song-to-start">
-        <div class="thumb"><img [src]="nextSong.Thumbnail" alt="img"></div>
+        <div class="thumb"><img [src]="nextSong.thumbnail" alt="img"></div>
         <div class="song-info">
-          <div class="song-title">{{nextSong.Title}}</div>
-          <div class="added-by">Added by {{nextSong.AddedByUserName}}</div>
+          <div class="song-title">{{nextSong.title}}</div>
+          <div class="added-by">Added by {{nextSong.addedByUserName}}</div>
         </div>
         <div class="play-button">
           <img (click)="play()" src="../../../assets/play-button.svg" alt="play">

@@ -21,7 +21,7 @@ namespace Evidences.Domain.Handlers.QueryHandlers.StateQueryHandlers
         public async Task<State> ExecuteAsync(GetStateQuery command, State previousResult)
         {
             var currentSong = await _currentSongRepository.FirstOrDefault();
-            var queue = await _songRepository.GetAll(x => x.Finished == false);
+            var queue = await _songRepository.GetAll("SELECT * FROM c where c.finished = false");
 
             if (currentSong != null) 
             {

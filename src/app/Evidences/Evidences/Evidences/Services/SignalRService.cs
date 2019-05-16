@@ -32,6 +32,10 @@ namespace Evidences.Services
 
         public event EventHandler<SongToRemove> OnRemoveSong;
 
+        public event EventHandler<SongToRemove> OnSessionStarted;
+
+        public event EventHandler<SongToRemove> OnSessionEnded;
+
         public async Task Connect()
         {
             await CreateConnection();
@@ -44,6 +48,7 @@ namespace Evidences.Services
         public async Task Disconnect()
         {
             await _hubConnection.StopAsync();
+            this.IsConnected = false;
         }
 
         private async Task CreateConnection()
@@ -60,6 +65,12 @@ namespace Evidences.Services
                 .WithUrl(credentials.Url,
                     options => options.AccessTokenProvider = () => Task.FromResult(credentials.AccessToken))
                 .Build();
+
+            _hubConnection.Closed += (arg) => 
+            { 
+                IsConnected = false;
+                return Task.CompletedTask; 
+            };
 
             SetUpEvents();
         }
@@ -84,6 +95,16 @@ namespace Evidences.Services
             _hubConnection.On<SongToRemove>("removeSongCommandNotification", song =>
             {
                 OnRemoveSong?.Invoke(this, song);
+            });
+
+            _hubConnection.On("endSessionCommandNotification", () =>
+            {
+                OnSessionEnded?.Invoke(this, null);
+            });
+
+            _hubConnection.On("startSessionCommandNotification", () =>
+            {
+                OnRemoveSong?.Invoke(this, null);
             });
         }
 

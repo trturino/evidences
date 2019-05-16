@@ -17,31 +17,32 @@
 using System;
 using Prism.Behaviors;
 using Xamarin.Forms;
-using System.Reactive.Linq;
-using System.Threading;
 using System.Windows.Input;
 
 namespace Evidences.Behaviors
 {
     public class CompletedCommandBehavior : BehaviorBase<Entry>
     {
-        private IDisposable _subscription;
-
 
         protected override void OnAttachedTo(Entry bindable)
         {
             base.OnAttachedTo(bindable);
+            bindable.Completed += Bindable_Completed;
+        }
 
-            _subscription = Observable.FromEventPattern(
-                    handler => AssociatedObject.Completed += handler,
-                    handler => AssociatedObject.Completed -= handler)
-                .ObserveOn(SynchronizationContext.Current)
-                .Select(eventPattern => AssociatedObject.Text)
-                .DistinctUntilChanged()
-                .Subscribe(query => Device.BeginInvokeOnMainThread(() =>
-                {
-                    CompletedCommand?.Execute(query);
-                }));
+        protected override void OnDetachingFrom(Entry bindable)
+        {
+            base.OnDetachingFrom(bindable);
+            bindable.Completed -= Bindable_Completed;
+        }
+
+        void Bindable_Completed(object sender, EventArgs e)
+        {
+            var entry = sender as Entry;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                CompletedCommand?.Execute(entry.Text);
+            });
         }
 
         public static readonly BindableProperty CompletedCommandProperty =

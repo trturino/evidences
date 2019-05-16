@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NowPlayingPage.xaml.cs" company="ArcTouch LLC">
+// <copyright file="GetSongScoreQuery.cs" company="ArcTouch LLC">
 //   Copyright 2019 ArcTouch LLC.
 //   All rights reserved.
 //
@@ -11,27 +11,15 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the NowPlayingPage.xaml type.
+//   Defines the GetSongScoreQuery type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using Xamarin.Forms;
-
-namespace Evidences.Views
+using System;
+using AzureFromTheTrenches.Commanding.Abstractions;
+namespace Evidences.Domain.Queries.ScoreQueries
 {
-    public partial class NowPlayingPage : ContentPage
+    public class GetSongScoreQuery : ICommand<int>
     {
-        public NowPlayingPage()
-        {
-            InitializeComponent();
-        }
-
-        async void Handle_Tapped(object sender, System.EventArgs e)
-        {
-            var label = sender as Label;
-            label.ScaleTo(1.5, 200);
-            await label.FadeTo(0.5, 200);
-            label.Scale = 1;
-            label.Opacity = 1;
-        }
+        public Guid SongId { get; set; }
     }
 }

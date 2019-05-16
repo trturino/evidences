@@ -20,7 +20,7 @@ namespace Evidences
         {
             InitializeComponent();
 #if DEBUG
-            HotReloader.Current.Start(this);
+            //HotReloader.Current.Start(this);
 #endif
             await InitializeNavigaton();
         }
@@ -40,6 +40,8 @@ namespace Evidences
                 await NavigationService.NavigateAsync("Go/Home");
             }
         }
+
+        protected ISignalRService SignalRService => Container.Resolve<ISignalRService>();
 
         //TODO: half mozzarella half pepperoni
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -61,12 +63,16 @@ namespace Evidences
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            SignalRService.Disconnect();
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            var useService = Container.Resolve<IUserService>();
+            if (useService.Get() != null)
+            {
+                SignalRService.Connect();
+            }
         }
     }
 }

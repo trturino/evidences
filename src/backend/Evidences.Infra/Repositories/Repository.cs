@@ -24,10 +24,21 @@ namespace Evidences.Infra.Repositories
             await CosmosStore.AddAsync(obj);
         }
 
+        public async Task Clear()
+        {
+            var all = await GetAll();
+            await CosmosStore.RemoveRangeAsync(all);
+        }
+
         public async Task<bool> Exists(Guid id)
         {
             var item = await GetById(id);
             return item != null;
+        }
+
+        public async Task<TEntity> FirstOrDefault()
+        {
+            return await CosmosStore.Query().FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate = null)
@@ -39,6 +50,12 @@ namespace Evidences.Infra.Repositories
                 query = query.Where(predicate);
             }
 
+            return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAll(string sql)
+        {
+            var query = CosmosStore.Query(sql);
             return await query.ToListAsync();
         }
 

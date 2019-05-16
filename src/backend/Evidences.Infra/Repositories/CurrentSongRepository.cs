@@ -12,9 +12,6 @@ namespace Evidences.Infra.Repositories
         {
         }
 
-        public async Task<CurrentSong> FirstOrDefault()
-        {
-            return await CosmosStore.Query().FirstOrDefaultAsync();
-        }
+
     }
 }

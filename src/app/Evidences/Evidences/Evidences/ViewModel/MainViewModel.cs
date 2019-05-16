@@ -1,12 +1,12 @@
 ﻿using System.Windows.Input;
 using Evidences.Services;
-using Xamarin.Forms;
 using System.Linq;
 using Evidences.Models;
 using Prism.Navigation;
 using Prism.Commands;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System;
 
 namespace Evidences.ViewModel
 {
@@ -35,7 +35,6 @@ namespace Evidences.ViewModel
             SearchYoutube = new DelegateCommand<string>(async (x) => await SearchYoutubeExecute(x));
             NowPlaying = new DelegateCommand(async () => await NowPlayingExecute());
 
-            RegisterSignalREvents();
         }
 
         public CurrentSong CurrentSong
@@ -99,6 +98,21 @@ namespace Evidences.ViewModel
                 UpdateNowPlaying(state);
                 UpdateQueue(state);
             });
+        }
+
+        protected override async void SignalRService_OnSongAdded(object sender, Song e)
+        {
+            base.SignalRService_OnSongAdded(sender, e);
+            try
+            {
+                var state = await StateService.GetState();
+                UpdateNowPlaying(state);
+                UpdateQueue(state);
+            }
+            catch (System.Exception ex)
+            {
+                Console.Write(ex);
+            }
         }
 
         protected override void SignalRService_OnSongStarted(object sender, CurrentSong e)

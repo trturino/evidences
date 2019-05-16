@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NowPlayingPage.xaml.cs" company="ArcTouch LLC">
+// <copyright file="SessionRepository.cs" company="ArcTouch LLC">
 //   Copyright 2019 ArcTouch LLC.
 //   All rights reserved.
 //
@@ -11,27 +11,18 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the NowPlayingPage.xaml type.
+//   Defines the SessionRepository type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using Xamarin.Forms;
-
-namespace Evidences.Views
+using Cosmonaut;
+using Evidences.Domain.Models;
+using Evidences.Domain.Repositories;
+namespace Evidences.Infra.Repositories
 {
-    public partial class NowPlayingPage : ContentPage
+    public class SessionRepository : Repository<Evidences.Domain.Models.Session>, ISessionRepository
     {
-        public NowPlayingPage()
+        public SessionRepository(ICosmosStore<Session> cosmosStore) : base(cosmosStore)
         {
-            InitializeComponent();
-        }
-
-        async void Handle_Tapped(object sender, System.EventArgs e)
-        {
-            var label = sender as Label;
-            label.ScaleTo(1.5, 200);
-            await label.FadeTo(0.5, 200);
-            label.Scale = 1;
-            label.Opacity = 1;
         }
     }
 }

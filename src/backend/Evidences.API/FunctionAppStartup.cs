@@ -34,6 +34,11 @@ using FunctionMonkey.Abstractions;
 using FunctionMonkey.Abstractions.Builders;
 using FunctionMonkey.FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Evidences.Domain.Commands.SessionCommands;
+using Evidences.Domain.Handlers.CommandHandlers.SessionCommandHandlers;
+using Evidences.Domain.Queries.ScoreQueries;
 
 namespace Evidences.API
 {
@@ -48,6 +53,12 @@ namespace Evidences.API
                     var cosmosDbKey = Environment.GetEnvironmentVariable("CosmosDbKey");
                     var cosmosSettings = new CosmosStoreSettings("EvidencesDb", new Uri(cosmosDbUri), cosmosDbKey);
 
+                    JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+                    {
+                        Formatting = Formatting.Indented,
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    };
+
                     commandRegistry.Register<StartSongCommandHandler>();
                     commandRegistry.Register<FinishSongCommandHandler>();
                     commandRegistry.Register<GetCurrentSongQueryHandler>();
@@ -59,16 +70,20 @@ namespace Evidences.API
                     commandRegistry.Register<GetStateQueryHandler>();
                     commandRegistry.Register<ReactionCommandHandler>();
                     commandRegistry.Register<SignalRNegotiateCommandHandler>();
+                    commandRegistry.Register<StartSessionCommandHandler>();
+                    commandRegistry.Register<EndSessionCommandHandler>();
 
                     serviceCollection.AddCosmosStore<CurrentSong>(cosmosSettings);
                     serviceCollection.AddCosmosStore<Score>(cosmosSettings);
                     serviceCollection.AddCosmosStore<Song>(cosmosSettings);
                     serviceCollection.AddCosmosStore<User>(cosmosSettings);
+                    serviceCollection.AddCosmosStore<Session>(cosmosSettings);
 
                     serviceCollection.AddScoped<ICurrentSongRepository, CurrentSongRepository>();
                     serviceCollection.AddScoped<IScoreRepository, ScoreRepository>();
                     serviceCollection.AddScoped<ISongRepository, SongRepository>();
                     serviceCollection.AddScoped<IUserRepository, UserRepository>();
+                    serviceCollection.AddScoped<ISessionRepository, SessionRepository>();
 
                     serviceCollection.AddScoped<IValidator<StartSongCommand>, StartSongCommandValidator>();
                     serviceCollection.AddScoped<IValidator<ReactionCommand>, ReactionCommandValidator>();
@@ -114,8 +129,22 @@ namespace Evidences.API
                     .HttpRoute("v1/state", route => route
                         .HttpFunction<GetStateQuery>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
                     )
+                    .HttpRoute("v1/score/song", route => route
+                        .HttpFunction<GetSongScoreQuery>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
+                    )
+                    .HttpRoute("v1/score/user", route => route
+                        .HttpFunction<GetUserSongScoreQuery>(AuthorizationTypeEnum.Anonymous, HttpMethod.Get)
+                    )
                     .HttpRoute("v1/reaction", route => route
                         .HttpFunction<ReactionCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                        .OutputTo.SignalRMessage("karaokeHub")
+                    )
+                    .HttpRoute("v1/session/start", route => route
+                        .HttpFunction<StartSessionCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
+                        .OutputTo.SignalRMessage("karaokeHub")
+                    )
+                    .HttpRoute("v1/session/end", route => route
+                        .HttpFunction<EndSessionCommand>(AuthorizationTypeEnum.Anonymous, HttpMethod.Post)
                         .OutputTo.SignalRMessage("karaokeHub")
                     )
                     .SignalR(signalR => signalR

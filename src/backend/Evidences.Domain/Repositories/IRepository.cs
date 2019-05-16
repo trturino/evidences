@@ -18,6 +18,12 @@ namespace Evidences.Domain.Repositories
 
         Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate = null);
 
+        Task<IEnumerable<TEntity>> GetAll(string sql);
+
         Task<bool> Exists(Guid id);
+
+        Task<TEntity> FirstOrDefault();
+
+        Task Clear();
     }
 }

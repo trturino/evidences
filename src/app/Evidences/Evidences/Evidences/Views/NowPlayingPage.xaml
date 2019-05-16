@@ -12,6 +12,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:BoolStarConverter x:Key="starConv" />
+            <conv:AddedByConverter x:Key="addedConv" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -79,7 +80,7 @@
                 LineBreakMode="WordWrap"
                 Grid.Row="3"
                 Grid.ColumnSpan="2"
-                Text="{Binding AddedBy}"
+                Text="{Binding CurrentSong.UserName, Converter={StaticResource addedConv}}"
                 TextColor="{StaticResource lightGrey}" />
             <!-- stars -->
             <Grid
@@ -104,16 +105,24 @@
                 </Grid.ColumnDefinitions>
                 <ImageButton
                     Grid.Column="0"
-                    Source="{Binding Star1, Converter={StaticResource starConv}}" />
+                    Source="{Binding Star1, Converter={StaticResource starConv}}" 
+                    Command="{Binding Star1Command}"/>
+                    
                 <ImageButton
                     Grid.Column="1"
-                    Source="{Binding Star2, Converter={StaticResource starConv}}" />
+                    Source="{Binding Star2, Converter={StaticResource starConv}}" 
+                    Command="{Binding Star2Command}"/>
+                    
                 <ImageButton
                     Grid.Column="2"
-                    Source="{Binding Star3, Converter={StaticResource starConv}}" />
+                    Source="{Binding Star3, Converter={StaticResource starConv}}" 
+                    Command="{Binding Star3Command}"/>
+                    
                 <ImageButton
                     Grid.Column="3"
-                    Source="{Binding Star4, Converter={StaticResource starConv}}" />
+                    Source="{Binding Star4, Converter={StaticResource starConv}}"
+                    Command="{Binding Star4Command}"/>
+                    
                 <ImageButton
                     Grid.Column="4"
                     Source="{Binding Star5, Converter={StaticResource starConv}}"
@@ -124,7 +133,7 @@
                 VerticalOptions="End"
                 Margin="0, 0, 0, 0"
                 Grid.Row="5"
-                HeightRequest="240"
+                HeightRequest="220"
                 Grid.ColumnSpan="2"
                 BackgroundColor="{StaticResource white}"
                 CornerRadius="32, 32, 0, 0" />
@@ -138,11 +147,11 @@
                 Padding="0">
                 <Grid.RowDefinitions>
                     <RowDefinition
-                        Height="0.2*" />
+                        Height="20" />
                     <RowDefinition
-                        Height="0.4*" />
+                        Height="50" />
                     <RowDefinition
-                        Height="0.4*" />
+                        Height="50" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
@@ -158,7 +167,7 @@
                     <ColumnDefinition
                         Width="0.2*" />
                 </Grid.ColumnDefinitions>
-                <BoxView
+                <!--<BoxView
                     Grid.Row="0"
                     Grid.Column="0"
                     Grid.ColumnSpan="6"
@@ -167,67 +176,139 @@
                     WidthRequest="50"
                     HeightRequest="6"
                     BackgroundColor="{StaticResource blackTransparent}"
-                    CornerRadius="3" />
+                    CornerRadius="3" />-->
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
                     Text="😊"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="😊" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="1"
                     Grid.Column="1"
                     Text="💩"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="💩" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="1"
                     Grid.Column="2"
                     Text="😂"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="😂" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="1"
                     Grid.Column="3"
                     Text="😱"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="😱" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="1"
                     Grid.Column="4"
                     Text="😍"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="😍" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="1"
                     Grid.Column="5"
-                    Text="❤"
-                    FontSize="54" />
+                    Text="❤️"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="❤️" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="2"
                     Grid.Column="0"
                     Text="&#x1F914;"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F914;" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="2"
                     Grid.Column="1"
                     Text="&#x1F4AF;"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F4AF;" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="2"
                     Grid.Column="2"
                     Text="&#x1F918;"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F918;" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="2"
                     Grid.Column="3"
                     Text="&#x1F3B8;"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F3B8;" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="2"
                     Grid.Column="4"
                     Text="&#x1F3A4;"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F3A4;" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Grid.Row="2"
                     Grid.Column="5"
                     Text="&#x1F910;"
-                    FontSize="54" />
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F910;" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
         </Grid>
     </ContentPage.Content>

@@ -93,7 +93,7 @@ namespace Evidences.ViewModel
                 await ExecuteBusyAction(async () =>
                 {
                     Songs.Clear();
-                    var songs = await YoutubeSearchService.SearchVideo(SearchQuery, 1);
+                    var songs = await YoutubeSearchService.SearchVideo($"{SearchQuery} karaoke", 1);
                     foreach (var song in songs)
                         Songs.Add(song);
                 });

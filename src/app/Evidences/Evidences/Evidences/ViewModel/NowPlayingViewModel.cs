@@ -65,14 +65,6 @@ namespace Evidences.ViewModel
             RegisterSignalREvents();
         }
 
-        protected override void SignalRService_OnSongFinished(object sender, CurrentSong e)
-        {
-            base.SignalRService_OnSongFinished(sender, e);
-
-            CloseExecute();
-        }
-
-
         public ICommand CloseCommand { get; }
 
         public Task CloseExecute()

@@ -25,7 +25,7 @@ export class PlayerService {
     // play the next song if its not the end of the playlist
     // should add a "repeat" feature
     if (state === YT.PlayerState.ENDED) {
-      this.apiService.stopPlaying();
+      this.apiService.stopPlaying().subscribe((x) => console.log(x));
       this.nowPlaying = undefined;
       this.songHasFinished.emit();
     }
@@ -34,7 +34,13 @@ export class PlayerService {
       // service.playerState = YT.PlayerState.PAUSED;
     }
     if (state === YT.PlayerState.PLAYING) {
-      this.apiService.startPlaying(this.nowPlaying);
+      if (this.nowPlaying.url === 'http://www.youtube.com/watch?v=inPbTLwKa8w') {
+        setTimeout(() => {
+          this.player.stopVideo();
+          this.nowPlaying = undefined;
+          this.songHasFinished.emit();
+        }, 185000);
+      }
     }
   }
 
@@ -46,7 +52,7 @@ export class PlayerService {
 
   playVideo(song: any, seconds?: number) {
     this.nowPlaying = song;
-    const id = song.Url.replace('http://www.youtube.com/watch?v=', '');
+    const id = song.url.replace('http://www.youtube.com/watch?v=', '');
     const isLoaded = this.player.getVideoUrl().includes(id);
     if (!isLoaded) {
       this.zone.runOutsideAngular(() =>

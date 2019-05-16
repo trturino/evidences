@@ -32,6 +32,9 @@ namespace Evidences.Domain.Handlers.CommandHandlers.CurrentSongCommandHandlers
             {
                 return null;
             }
+            
+            song.Finished = true;
+            await _songRepository.Update(song);
 
             var user = await _userRepository.GetById(song.AddedByUser);
             var currentSong = await _currentSongRepository.FirstOrDefault();

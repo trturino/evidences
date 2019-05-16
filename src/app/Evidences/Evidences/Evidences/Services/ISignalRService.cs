@@ -19,5 +19,9 @@ namespace Evidences.Services
         event EventHandler<CurrentSong> OnSongStarted;
 
         event EventHandler<SongToRemove> OnRemoveSong;
+
+        event EventHandler<SongToRemove> OnSessionStarted;
+
+        event EventHandler<SongToRemove> OnSessionEnded;
     }
 }

@@ -81,6 +81,10 @@ namespace Evidences
             builder
                 .RegisterType<ReactionService>()
                 .As<IReactionService>();
+
+            builder
+                .RegisterType<ScoreService>()
+                .As<IScoreService>();
         }
 
         //private void RegisterViewModel(ContainerBuilder builder)

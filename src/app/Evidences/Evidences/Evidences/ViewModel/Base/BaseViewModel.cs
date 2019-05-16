@@ -26,6 +26,8 @@ namespace Evidences.ViewModel
             SignalRService = signaRService;
             UserService = userService;
             NavigationService = navigationService;
+
+            RegisterSignalREvents();
         }
 
         public bool IsNotBusy
@@ -47,6 +49,16 @@ namespace Evidences.ViewModel
             SignalRService.OnSongAdded += SignalRService_OnSongAdded;
             SignalRService.OnSongFinished += SignalRService_OnSongFinished;
             SignalRService.OnSongStarted += SignalRService_OnSongStarted;
+            SignalRService.OnSessionStarted += SignalRService_OnSessionStarted;
+            SignalRService.OnSessionEnded += SignalRService_OnSessionEnded;
+        }
+
+        protected virtual void SignalRService_OnSessionEnded(object sender, SongToRemove e)
+        {
+        }
+
+        protected virtual void SignalRService_OnSessionStarted(object sender, SongToRemove e)
+        {
         }
 
         protected virtual void SignalRService_OnSongStarted(object sender, Models.CurrentSong e)

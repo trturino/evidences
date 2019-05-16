@@ -6,6 +6,8 @@ namespace Evidences.Domain.Models
     {
         public CurrentSong CurrentSong { get; set; }
 
+        public bool HasSession { get; set; }
+
         public ICollection<Song> Queue { get; set; }
     }
 }

@@ -8,6 +8,7 @@
     x:Class="Evidences.Views.MainPage"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:behaviors="clr-namespace:Evidences.Behaviors;assembly=Evidences"
     mc:Ignorable="d"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="{StaticResource black}">
@@ -49,13 +50,22 @@
                 <StackLayout
                     Orientation="Horizontal"
                     Spacing="16">
-                    <Image
+                    <ImageButton
                         Source="search.png"
                         HeightRequest="18"
+                        Command="{Binding SearchYoutube}"
                         WidthRequest="18" />
-                    <Label
-                        Text="Find song"
-                        TextColor="{StaticResource lightGrey}" />
+                    <Entry
+                        Placeholder="Find song"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="FillAndExpand"
+                        Text="{Binding SearchQuery}"
+                        TextColor="{StaticResource lightGrey}" >
+                        <Entry.Behaviors>
+                            <behaviors:CompletedCommandBehavior 
+                                CompletedCommand="{Binding SearchYoutube}"/>
+                        </Entry.Behaviors>
+                    </Entry>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer
                             Command="{Binding SearchYoutube}"
@@ -67,6 +77,7 @@
                 Grid.Row="2"
                 Margin="24,0,24,0"
                 Text="Now playing"
+                IsVisible="{Binding HasNowPlaying}"
                 FontSize="24"
                 FontAttributes="Bold"
                 TextColor="{StaticResource pumpkinOrange}" />
@@ -77,11 +88,19 @@
                 BackgroundColor="{StaticResource white}"
                 CornerRadius="32, 32, 0, 0" />
             <!-- now playing -->
+            <Grid
+                Grid.Row="3"
+                Margin="24, 12, 24, 0"
+                HeightRequest="68"
+                IsVisible="{Binding IsNowPlayingEmpty}">
+                
+            </Grid>
             <Frame
                 Grid.Row="3"
                 Margin="24, 12, 24, 0"
                 HeightRequest="68"
                 HasShadow="true"
+                IsVisible="{Binding HasNowPlaying}"
                 Padding="0"
                 BackgroundColor="{StaticResource white}">
                 <Grid
@@ -142,6 +161,16 @@
                 </Frame.GestureRecognizers>
             </Frame>
             <!-- queue -->
+            <Label
+                Text="Search and add songs to start singing"
+                FontSize="16"
+                Grid.Row="4"
+                IsVisible="{Binding IsQueueEmpty}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontAttributes="Bold"
+                Grid.RowSpan="3"
+                TextColor="{StaticResource brownGrey}" />
             <ListView
                 ItemsSource="{Binding SongQueue}"
                 CachingStrategy="RecycleElement"
@@ -158,6 +187,7 @@
                         <Label
                             Text="Next"
                             FontSize="24"
+                            IsVisible="{Binding HasSongsToBePlayed}"
                             FontAttributes="Bold"
                             TextColor="{StaticResource brownGrey}" />
                     </StackLayout>

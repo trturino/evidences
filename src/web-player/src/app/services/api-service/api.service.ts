@@ -6,7 +6,7 @@ import { HttpClient  } from '@angular/common/http';
 })
 export class ApiService {
 
-  private apiEndpoint = 'https://evidences-api.azurewebsites.net/';
+  private apiEndpoint = 'https://evidences-api.azurewebsites.net';
   private playerId = '8AC6F07F-62AE-4D86-AEF7-0299FF245BE2';
 
   constructor(private http: HttpClient) { }
@@ -28,6 +28,10 @@ export class ApiService {
   }
 
   stopPlaying() {
-    return this.http.post(`${this.apiEndpoint}/v1/song/current/finish`, {});
+    return this.http.post(`${this.apiEndpoint}/v1/song/current/finish`, { });
+  }
+
+  getState() {
+    return this.http.get(`${this.apiEndpoint}/v1/state`);
   }
 }

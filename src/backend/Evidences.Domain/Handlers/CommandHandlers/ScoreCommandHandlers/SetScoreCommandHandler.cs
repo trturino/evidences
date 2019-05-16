@@ -4,6 +4,7 @@ using AzureFromTheTrenches.Commanding.Abstractions;
 using Evidences.Domain.Commands.ScoreCommands;
 using Evidences.Domain.Models;
 using Evidences.Domain.Repositories;
+using System.Linq;
 
 namespace Evidences.Domain.Handlers.CommandHandlers.ScoreCommandHandlers
 {
@@ -27,6 +28,17 @@ namespace Evidences.Domain.Handlers.CommandHandlers.ScoreCommandHandlers
             if (currentSong == null)
             {
                 return null;
+            }
+
+            var actualScore = (await _scoreRepository.GetAll($"select * from c where c.judgeUserId = '{command.JudgeUserId}' and c.songId = '{command.SongId}'")).FirstOrDefault();
+
+            if (actualScore != null)
+            {
+                actualScore.ScoreNumber = command.ScoreNumber;
+                actualScore.ScoredAt = DateTime.UtcNow;
+
+                await _scoreRepository.Update(actualScore);
+                return actualScore;
             }
 
             var score = new Score()

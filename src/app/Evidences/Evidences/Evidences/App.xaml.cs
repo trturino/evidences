@@ -20,7 +20,7 @@ namespace Evidences
         {
             InitializeComponent();
 #if DEBUG
-            HotReloader.Current.Start(this);
+            //HotReloader.Current.Start(this);
 #endif
             await InitializeNavigaton();
         }
@@ -41,13 +41,15 @@ namespace Evidences
             }
         }
 
+        protected ISignalRService SignalRService => Container.Resolve<ISignalRService>();
+
         //TODO: half mozzarella half pepperoni
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             var builder = containerRegistry.GetBuilder();
             builder.RegisterModule(new ApplicationModule());
 
-            containerRegistry.RegisterForNavigation<NavigationPage>("Go");
+            containerRegistry.RegisterForNavigation<AppNavigationPage>("Go");
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Home");
             containerRegistry.RegisterForNavigation<OnboardingPage, OnboardingViewModel>("Onboarding");
             containerRegistry.RegisterForNavigation<SearchPage, SearchViewModel>("Search");
@@ -61,12 +63,16 @@ namespace Evidences
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            SignalRService.Disconnect();
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            var useService = Container.Resolve<IUserService>();
+            if (useService.Get() != null)
+            {
+                SignalRService.Connect();
+            }
         }
     }
 }

@@ -14,9 +14,6 @@
 //   Defines the NowPlayingPage.xaml type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
-
 using Xamarin.Forms;
 
 namespace Evidences.Views
@@ -26,6 +23,15 @@ namespace Evidences.Views
         public NowPlayingPage()
         {
             InitializeComponent();
+        }
+
+        async void Handle_Tapped(object sender, System.EventArgs e)
+        {
+            var label = sender as Label;
+            label.ScaleTo(1.5, 200);
+            await label.FadeTo(0.5, 200);
+            label.Scale = 1;
+            label.Opacity = 1;
         }
     }
 }

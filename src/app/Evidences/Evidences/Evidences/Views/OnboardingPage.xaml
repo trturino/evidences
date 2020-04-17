@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    x:Class="Evidences.Views.OnboardingPage"
+    BackgroundColor="{StaticResource black}">
+    <ContentPage.Content>
+        <Grid ColumnSpacing="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" 
+                   AutomationProperties.IsInAccessibleTree="true"
+                   AutomationProperties.Name="The AT OK Logo!"
+                   AutomationProperties.HelpText="This is an orange logo! It's like a microphone built with the ArcTouch logo."
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Source="logoHorizontal.png" 
+                   WidthRequest="218" 
+                   HeightRequest="102" />
+            <Label Grid.Row="1" 
+                   Margin="24,0,24,8"
+                   Text="Who are you?" 
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource pumpkinOrange}" />
+            <Entry Grid.Row="2" 
+                   Margin="24,0,24,0"
+                   Placeholder="Your name" 
+                   HeightRequest="48" 
+                   Text="{Binding UserName}"
+                   TextColor="{StaticResource lightGrey}"
+                   BackgroundColor="{StaticResource grey}" />
+            <ActivityIndicator Margin="24,24,24,0" 
+                               Grid.Row="3"
+                               IsRunning="{Binding IsBusy}" 
+                               Color="{StaticResource pumpkinOrange}" />
+            <Button Grid.Row="4" Text="Let’s sing" 
+                    TextColor="{StaticResource white }"
+                    FontSize="20"
+                    CornerRadius="0"
+                    HeightRequest="80" 
+                    VerticalOptions="End"
+                    Command="{Binding LetsSing}"
+                    BackgroundColor="{StaticResource pumpkinOrange}">
+            </Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

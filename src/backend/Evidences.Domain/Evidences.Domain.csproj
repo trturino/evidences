@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Repositories\Repository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Handlers\CommandHandlers\NotifyUserCommandHandlers\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Commands\SongCommands\" />
+    <Folder Include="Commands\UserCommands\" />
+    <Folder Include="Commands\SignalRCommands\" />
+    <Folder Include="Handlers\CommandHandlers\SignalRCommandHandlers\" />
+    <Folder Include="Validator\SignalRCommandValidators\" />
+    <Folder Include="Queries\ScoreQueries\" />
+    <Folder Include="Handlers\QueryHandlers\ScoreQueryHandlers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.2.2" />
+    <PackageReference Include="FunctionMonkey.Abstractions" Version="2.1.0" />
+  </ItemGroup>
+</Project>

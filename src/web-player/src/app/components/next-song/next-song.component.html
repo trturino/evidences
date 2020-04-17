@@ -1,0 +1,20 @@
+<div [ngClass]="{ 'next-song': true, 'fadeOutDown': !isVisible, 'fadeInUp': isVisible }">
+  <div class="container">
+    <h1>Playing next</h1>
+    <div class="song">
+      <div class="empty-state" *ngIf="!nextSong">
+        Your queue is empty, add a song and start singing
+      </div>
+      <div *ngIf="nextSong" class="song-to-start">
+        <div class="thumb"><img [src]="nextSong.thumbnail" alt="img"></div>
+        <div class="song-info">
+          <div class="song-title">{{nextSong.title}}</div>
+          <div class="added-by">Added by {{nextSong.addedByUserName}}</div>
+        </div>
+        <div class="play-button">
+          <img (click)="play()" src="../../../assets/play-button.svg" alt="play">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

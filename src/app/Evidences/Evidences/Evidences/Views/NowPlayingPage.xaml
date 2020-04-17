@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    xmlns:conv="clr-namespace:Evidences.ValueConverters;assembly=Evidences"
+    NavigationPage.HasNavigationBar="False"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="Evidences.Views.NowPlayingPage"
+    BackgroundColor="{StaticResource black}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:BoolStarConverter x:Key="starConv" />
+            <conv:AddedByConverter x:Key="addedConv" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid
+            Padding="0, 0, 0, 0"
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="250" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="88" />
+                <RowDefinition
+                    Height="auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+            <ffimageloading:CachedImage
+                DownsampleToViewSize="true" 
+                Aspect="AspectFill"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Source="{Binding CurrentSong.Thumbnail}"
+                HeightRequest="400" />
+            <!-- close button -->
+            <Grid
+                HeightRequest="88"
+                VerticalOptions="Start"
+                Grid.Row="0"
+                Padding="0, 20, 0, 9"
+                BackgroundColor="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="33" />
+                    <ColumnDefinition
+                        Width="*" />
+                    <ColumnDefinition
+                        Width="33" />
+                </Grid.ColumnDefinitions>
+                <ImageButton
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="17, 0, 0, 0"
+                    HeightRequest="16"
+                    Source="chevron.png"
+                    Command=" {Binding CloseCommand}"
+                    WidthRequest="16" />
+            </Grid>
+            <Label
+                Margin="24, 24, 24, 12"
+                FontSize="22"
+                FontAttributes="Bold"
+                LineBreakMode="WordWrap"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Text="{Binding CurrentSong.Title}"
+                TextColor="{StaticResource white}" />
+            <Label
+                Margin="24, 0, 24, 0"
+                FontSize="16"
+                FontAttributes="Bold"
+                LineBreakMode="WordWrap"
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Text="{Binding CurrentSong.UserName, Converter={StaticResource addedConv}}"
+                TextColor="{StaticResource lightGrey}" />
+            <!-- stars -->
+            <Grid
+                Grid.Row="4"
+                HeightRequest="66"
+                Grid.ColumnSpan="2"
+                ColumnSpacing="16"
+                VerticalOptions="End"
+                Margin="24, 24, 24, 72"
+                Padding="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                </Grid.ColumnDefinitions>
+                <ImageButton
+                    Grid.Column="0"
+                    Source="{Binding Star1, Converter={StaticResource starConv}}" 
+                    Command="{Binding Star1Command}"/>
+                    
+                <ImageButton
+                    Grid.Column="1"
+                    Source="{Binding Star2, Converter={StaticResource starConv}}" 
+                    Command="{Binding Star2Command}"/>
+                    
+                <ImageButton
+                    Grid.Column="2"
+                    Source="{Binding Star3, Converter={StaticResource starConv}}" 
+                    Command="{Binding Star3Command}"/>
+                    
+                <ImageButton
+                    Grid.Column="3"
+                    Source="{Binding Star4, Converter={StaticResource starConv}}"
+                    Command="{Binding Star4Command}"/>
+                    
+                <ImageButton
+                    Grid.Column="4"
+                    Source="{Binding Star5, Converter={StaticResource starConv}}"
+                    Command="{Binding Star5Command}"/>
+            </Grid>
+            <!-- emojis -->
+            <BoxView
+                VerticalOptions="End"
+                Margin="0, 0, 0, 0"
+                Grid.Row="5"
+                HeightRequest="220"
+                Grid.ColumnSpan="2"
+                BackgroundColor="{StaticResource white}"
+                CornerRadius="32, 32, 0, 0" />
+            <Grid
+                VerticalOptions="End"
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                ColumnSpacing="8"
+                RowSpacing="4"
+                Margin="24, 0, 24, 48"
+                Padding="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="20" />
+                    <RowDefinition
+                        Height="50" />
+                    <RowDefinition
+                        Height="50" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                    <ColumnDefinition
+                        Width="0.2*" />
+                </Grid.ColumnDefinitions>
+                <!--<BoxView
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="6"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="50"
+                    HeightRequest="6"
+                    BackgroundColor="{StaticResource blackTransparent}"
+                    CornerRadius="3" />-->
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="😊"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="😊" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="💩"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="💩" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Text="😂"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="😂" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Text="😱"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="😱" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    Text="😍"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="😍" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="5"
+                    Text="❤️"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="❤️" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="&#x1F914;"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F914;" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="&#x1F4AF;"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F4AF;" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Text="&#x1F918;"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F918;" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Text="&#x1F3B8;"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F3B8;" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="4"
+                    Text="&#x1F3A4;"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F3A4;" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="5"
+                    Text="&#x1F910;"
+                    FontSize="48" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Handle_Tapped" 
+                                              Command="{Binding ReactionTappedCommand}" 
+                                              CommandParameter="&#x1F910;" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

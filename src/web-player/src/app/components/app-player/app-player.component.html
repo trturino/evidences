@@ -1,0 +1,8 @@
+<div class="player">
+  <youtube-player
+    (ready)="setupPlayer($event)"
+    (change)="updatePlayerState($event)"
+    [height]="screenHeight"
+    [width]="screenWidth">
+  </youtube-player>
+</div>

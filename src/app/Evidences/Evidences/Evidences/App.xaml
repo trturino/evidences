@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<prism:PrismApplication
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="clr-namespace:Prism.Autofac;assembly=Prism.Autofac.Forms"
+    x:Class="Evidences.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Color palette -->
+            <Color x:Key="black">#FF1C1C1C</Color>
+            <Color x:Key="pumpkinOrange">#FFFF7B02</Color>
+            <Color x:Key="white">#FFFFFFFF</Color>
+            <Color x:Key="grey">#323232</Color>
+            <Color x:Key="lightGrey">#ADADAD</Color>
+            <Color x:Key="brownGrey">#FF8B8B8B</Color>
+            <Color x:Key="blackTransparent">#CC1C1C1C</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</prism:PrismApplication>
